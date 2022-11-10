@@ -1,0 +1,116 @@
+.container {
+    background: #F5F5F5;
+    border-radius: 10px;
+    width: 346px;
+    height: 434px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    padding: 8px;
+
+    h2 {
+        font-weight: 900;
+        font-size: 15px;
+        line-height: 19px;
+        text-align: center;
+        text-transform: uppercase;
+        
+        color: var(--blue-dark);
+    }
+
+    form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+
+        div {
+            display: flex;
+            position: relative;
+
+            button {
+                background-color: transparent;
+                border: none;
+                position: absolute;
+                top: 0;
+                right: 0;
+                margin-top: 0px;
+                height: 100%;
+
+                &:hover {
+                    filter: brightness(0.8);
+                }
+            }
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            background: var(--white);
+            border: 1px solid var(--black);
+            border-radius: 4px;
+
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 0.5px;
+            color: var(--blue-dark);
+            
+            transition: focus .3s;
+
+            &:focus {
+                outline: none;
+                border: 1px solid var(--orange);
+            }
+        }
+
+        button {
+            padding: 15px 10px;
+            background: var(--orange);
+            border: 1px solid #000000;
+            border-radius: 10px;
+
+            font-weight: 900;
+            font-size: 20px;
+            line-height: 25px;
+            text-align: center;
+            text-transform: capitalize;
+
+            margin-top: 10px;
+
+            color: var(--blue-dark);
+
+            transition: filter 0.3s;
+
+            &:hover {
+                filter: brightness(0.9);
+            }
+        }
+
+        span {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 0.5px;
+            color: var(--black);
+            text-align: center;
+
+            a {
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 20px;
+                letter-spacing: 0.5px;
+                color: var(--black);
+                text-decoration: underline;
+
+                &:hover {
+                    filter: brightness(0.8);
+                }
+            }
+        }
+    }
+}   
