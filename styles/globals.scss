@@ -8,10 +8,15 @@
 :root {
   --white: #FFFFFF;
   --black: #000000;
+  --orange: #FD7500;
+  --gray-light: #EEEEEE;
+  --gray-dark: #393E46;
+  --blue-dark: #222831;
+
 }
 
 body, input, textarea, select, button {
-  //font: 400 1rem "Poppins", sans-serif;
+  font: 400 1rem 'Gothic A1', sans-serif;
 }
 
 button {
