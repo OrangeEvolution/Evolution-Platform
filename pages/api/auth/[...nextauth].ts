@@ -1,30 +1,61 @@
 import NextAuth from "next-auth/next";
-import GithubProvider from "next-auth/providers/github";
-import FacebookProvider from "next-auth/providers/facebook";
-import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { api } from "../../../services/api";
+
+type CredentialsType = {
+  username: string;
+  password: string;
+}
+
+let user: any = null;
 
 export default NextAuth({
-    providers: [
-        GithubProvider({
-          clientId: process.env.GITHUB_ID!,
-          clientSecret: process.env.GITHUB_SECRET!,
-          // @ts-ignore
-          scope: "read:user",
-        }),
-        GoogleProvider({
-          clientId: process.env.GOOGLE_CLIENT_ID!,
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET!
-        }),
-        FacebookProvider({
-          clientId: process.env.FACEBOOK_CLIENT_ID!,
-          clientSecret: process.env.FACEBOOK_CLIENT_SECRET!
-        }),
-      ],
-      secret: process.env.SECRET,
-      
-      callbacks: {
-        async signIn({user, account, credentials}) {
-            return true;
+  session: {
+    strategy: "jwt"
+  },
+  providers: [
+    CredentialsProvider({
+      type: 'credentials',
+      credentials: {},
+      async authorize(credentials) {
+        const {username, password} = credentials as CredentialsType;
+        const res = await api.post('/auth/signin', {username, password});
+        
+        if(res.status == 200) {
+          const parse = JSON.parse(Buffer.from(res.data.token.split('.')[1], 'base64').toString());
+
+          user = {
+            id: parse.user_id,
+            name: parse.fullName,
+            email: parse.sub,
+            role: parse.roles,
+            token: res.data.token
+          }
+
+          return user;
+        } else {
+          return null;
         }
-      }
+      },
+    })
+  ],
+  secret: process.env.SECRET,
+  pages: {
+    signIn: "/login",
+    signOut: "/",
+  },
+  
+  callbacks: {
+    async jwt({token}){
+      user && (token.user = user);
+      return token
+    },
+
+    async session({ session, token }) {
+      session.user = token.user
+      
+      return session
+    }
+  }
+
 })

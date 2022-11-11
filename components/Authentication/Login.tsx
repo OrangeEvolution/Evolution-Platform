@@ -5,6 +5,7 @@ import styles from './Authentication.module.scss';
 import eye from '../../public/assets/icons/eye.svg';
 import eyeOff from '../../public/assets/icons/eye-off.svg';
 import Image from 'next/image';
+import { signIn } from 'next-auth/react';
 
 type LoginProps = {
     showRegisterForm: (status: boolean) => void;
@@ -20,7 +21,7 @@ export default function Login({ showRegisterForm }: LoginProps) {
         e.preventDefault();
 
         if (email !== '' && password !== '') {
-
+            signIn('credentials', { username: email, password });
         } else {
             notifyError('Preencha todos os campos do formulário');
         }

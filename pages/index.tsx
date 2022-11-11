@@ -15,9 +15,15 @@ import alura from '../public/assets/images/alura.svg';
 import rocketseat from '../public/assets/images/rocketseat.svg';
 import cubos from '../public/assets/images/cubos.svg';
 import Login from '../components/Authentication/Login'
+import { useSession } from 'next-auth/react'
 
 export default function Home() {
   const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
+
+  const { status, data } = useSession();
+
+  console.log(status)
+  console.log(data)
 
   const handlerShowLoginForm = (status: boolean) => {
     setShowLoginForm(status);
