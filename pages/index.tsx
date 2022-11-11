@@ -9,6 +9,7 @@ import FullstackWhite from '../public/assets/icons/fullstack-white.svg';
 import UxWhite from '../public/assets/icons/ux-white.svg';
 import QaWhite from '../public/assets/icons/qa-white.svg';
 
+import orangeEvolution from '../public/assets/images/orange-logo.svg';
 import fcamara from '../public/assets/images/fcamara.svg';
 import alura from '../public/assets/images/alura.svg';
 import rocketseat from '../public/assets/images/rocketseat.svg';
@@ -22,6 +23,7 @@ export default function Home() {
         <header>
 
           <section className={styles.presentation}>
+            <Image src={orangeEvolution} alt='Logo da Orange Evolution' />
             <h1>Evolua a sua carreira<br />na tecnologia</h1>
             <p>
               Explore conhecimentos que estão<br />

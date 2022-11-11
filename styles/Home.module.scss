@@ -1,12 +1,12 @@
 .container {
-  background: linear-gradient(242.84deg, rgba(52, 25, 2, 0.176) 61.75%, rgba(253, 117, 0, 0) 98.34%), #341902;
+  background: linear-gradient(197.28deg, rgba(253, 117, 0, 0.2) 41.5%, rgba(57, 62, 70, 0.2) 91.02%), rgba(0, 0, 0, 0.99);
   width: 100vw;
   min-height: 100vh;
   
   .main {
     max-width: 1120px;
     margin: 0 auto;
-    
+    padding: 0 10px;
 
     header {
       display: flex;
@@ -24,9 +24,13 @@
         align-items: flex-start;
         gap: 15px;
 
+        img {
+          display: none;
+        }
+
         h1 {
           font-weight: 600;
-          font-size: 64px;
+          font-size: 54px;
           line-height: 80px;
           color: var(--orange);
         }
@@ -34,7 +38,7 @@
         p {
           color: var(--white);
           font-weight: 400;
-          font-size: 32px;
+          font-size: 28px;
           line-height: 160.62%;
 
           span {
@@ -190,13 +194,69 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
 
         img {
-          max-width: 200px;
+          max-width: 180px;
 
           &:nth-child(3) {
-            max-width: 300px;
+            max-width: 250px;
           }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    header {
+      flex-direction: column;
+      gap: 20px;
+
+      .presentation {
+        width: 100%;
+
+        img {
+          display: block !important;
+          margin: 0 auto;
+          margin-bottom: -50px;
+        }
+
+        h1 {
+          margin: 0 auto;
+          font-size: 24px !important;
+          line-height: 30px !important;
+        }
+
+        p {
+          max-width: 280px;
+          margin: 0 auto;
+          font-size: 14px !important;
+          line-height: 160.62% !important;
+        }
+
+        a {
+          max-width: 350px;
+          margin: 0 auto;
+          padding: 10px 20px !important;
+        }
+      }
+    }
+
+    .sectionTwo {
+      flex-direction: column;
+
+      .trails {
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 30px;
+
+        ul {
+          gap: 25px;
+          margin-top: 10px;
         }
       }
     }
