@@ -6,13 +6,21 @@
 
 //cores
 :root {
-  --white: #FFFFFF;
+  --white: #ffffff;
   --black: #000000;
-  --grey: #393E46;
+  --orange: #fd7500;
+  --green: #34a853;
+  --gray-light: #eeeeee;
+  --gray-dark: #393e46;
+  --blue-dark: #222831;
 }
 
-body, input, textarea, select, button {
-  //font: 400 1rem "Poppins", sans-serif;
+body,
+input,
+textarea,
+select,
+button {
+  font: 400 1rem "Gothic A1", sans-serif;
 }
 
 button {
@@ -30,7 +38,12 @@ a {
   }
   body {
     color: white;
-    
-background: linear-gradient(242.84deg, rgba(52, 25, 2, 0.176) 61.75%, rgba(253, 117, 0, 0) 98.34%), #341902;
+
+    background: linear-gradient(
+        242.84deg,
+        rgba(52, 25, 2, 0.176) 61.75%,
+        rgba(253, 117, 0, 0) 98.34%
+      ),
+      #341902;
   }
 }

@@ -7,6 +7,8 @@ import Image from 'next/image';
 export default function Login() {
     const { data: session } = useSession();
 
+    console.log(session?.user)
+
     return (
         <div className={styles.container}>
             {!session
@@ -17,7 +19,7 @@ export default function Login() {
                 </>
                 : <>
                     <img className={styles.photo} src={session?.user?.image!} alt="Foto de Perfil" />
-                    Nome: {session.user?.name} <br />
+                    Id: {session.user?.name} <br />
                     E-mail: {session.user?.email}
                     <button onClick={(e) => { e.preventDefault(), signOut() }}>Deslogar</button>
                 </>
