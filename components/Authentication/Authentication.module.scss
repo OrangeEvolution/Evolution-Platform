@@ -11,6 +11,10 @@
 
     padding: 8px;
 
+    &.containerRegister {
+        height: 520px;
+    }
+
     h2 {
         font-weight: 900;
         font-size: 15px;
@@ -79,12 +83,21 @@
             line-height: 25px;
             text-align: center;
             text-transform: capitalize;
-
-            margin-top: 10px;
-
+            
             color: var(--blue-dark);
-
+            
             transition: filter 0.3s;
+            
+            &.buttonRegister {
+                margin-top: 10px;
+                font-weight: 800;
+                font-size: 20px;
+                line-height: 25px;
+                text-align: center;
+
+                background-color: var(--green);
+                color: var(--white);
+            }
 
             &:hover {
                 filter: brightness(0.9);

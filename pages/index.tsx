@@ -2,8 +2,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import Authentication from '../components/Authentication'
 import styles from '../styles/Home.module.scss'
+import Register from '../components/Authentication/Register'
 
 import FullstackWhite from '../public/assets/icons/fullstack-white.svg';
 import UxWhite from '../public/assets/icons/ux-white.svg';
@@ -14,8 +14,14 @@ import fcamara from '../public/assets/images/fcamara.svg';
 import alura from '../public/assets/images/alura.svg';
 import rocketseat from '../public/assets/images/rocketseat.svg';
 import cubos from '../public/assets/images/cubos.svg';
+import Login from '../components/Authentication/Login'
 
 export default function Home() {
+  const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
+
+  const handlerShowLoginForm = (status: boolean) => {
+    setShowLoginForm(status);
+  }
 
   return (
     <div className={styles.container}>
@@ -36,7 +42,11 @@ export default function Home() {
 
           <section className={styles.authentication}>
             <div className="content">
-              <Authentication />
+              {showLoginForm
+                ? <Login showRegisterForm={handlerShowLoginForm} />
+                : <Register setShowLoginForm={handlerShowLoginForm} />
+              }
+
             </div>
           </section>
 
