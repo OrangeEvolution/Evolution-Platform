@@ -8,6 +8,7 @@
 :root {
   --white: #FFFFFF;
   --black: #000000;
+  --grey: #393E46;
 }
 
 body, input, textarea, select, button {
@@ -29,6 +30,7 @@ a {
   }
   body {
     color: white;
-    background: black;
+    
+background: linear-gradient(242.84deg, rgba(52, 25, 2, 0.176) 61.75%, rgba(253, 117, 0, 0) 98.34%), #341902;
   }
 }
