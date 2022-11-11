@@ -25,8 +25,6 @@ export default function Login({ showRegisterForm }: LoginProps) {
         } else {
             notifyError('Preencha todos os campos do formulário');
         }
-
-        notifyError('Not implemented yet');
     }
 
     return (
