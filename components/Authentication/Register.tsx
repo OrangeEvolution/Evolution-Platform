@@ -1,13 +1,21 @@
 import { useState } from 'react';
-import { notifyError } from '../../util/notifyToast';
+import { notifyError, notifySuccess } from '../../util/notifyToast';
 
 import styles from './Authentication.module.scss';
 import eye from '../../public/assets/icons/eye.svg';
 import eyeOff from '../../public/assets/icons/eye-off.svg';
 import Image from 'next/image';
+import { registerUser } from '../../services/user';
 
 type RegisterProps = {
     setShowLoginForm: (status: boolean) => void;
+}
+
+type User = {
+    id: number;
+    fullName: string;
+    password: string;
+    userName: string;
 }
 
 export default function Register({ setShowLoginForm }: RegisterProps) {
@@ -19,12 +27,20 @@ export default function Register({ setShowLoginForm }: RegisterProps) {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
-    const handleSubmitRegisterForm = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitRegisterForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (name !== '' && email != '' && password !== '') {
             if (password === confirm) {
+                const res = await registerUser(email, name, password);
+                console.log(res)
 
+                if (res.user as User) {
+                    notifySuccess(`Parabéns ${res.user.fullName} sua conta foi criada com sucesso!`);
+                    setShowLoginForm(true);
+                } else {
+                    notifyError('Erro ao realizar o cadastro!');
+                }
             } else {
                 notifyError('As senhas não conferem!')
             }
