@@ -11,9 +11,13 @@ export async function createTrails(name: string, description: string, mounted_by
         return null;
     }
 }
-export async function findById(id: number) {
+export async function findById(id: number, token: string) {
     try {
-        let res = await api.get(`/api/trails/${id}`)
+        let res = await api.get(`/api/trails/${id}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
 
         if (res.data) {
             return res.data;
@@ -86,9 +90,13 @@ export async function removeCategoryToTrail(idTrail: number, idCategory: number)
     }
 
 }
-export async function findFullTrailById(id: number) {
+export async function findFullTrailById(id: number, token: string) {
     try {
-        let res = await api.get(`/api/trails/findfull/${id}`)
+        let res = await api.get(`/api/trails/findfull/${id}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
 
         if (res.data) {
             return res.data;

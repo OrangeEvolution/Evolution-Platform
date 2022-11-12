@@ -34,7 +34,7 @@ export default function Admin({ trails }: AdminProps) {
                 <span>Clique em cada trilha para adicionar ou atualizar cursos</span>
                 <div className={styles.trails}>
                     {trails.map((trail) => (
-                        <Link href='#' key={trail.id}>
+                        <Link href={`/admin/trail/${trail.id}`} key={trail.id}>
                             <Image src={TrailImage} alt={trail.name} />
                             <span>{trail.name}</span>
                         </Link>
