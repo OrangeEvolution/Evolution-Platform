@@ -14,7 +14,7 @@ export default function Trails() {
         const trail = await createTrails(name, description, mountedBy);
         if (trail) {
             console.log(trail);
-            notifySuccess('Trilha cadastrada com sucesso');
+            notifySuccess(`Trilha '${trail.name}' criada com sucesso`);
             setName('');
             setDescription('');
             setMountedBy('');
