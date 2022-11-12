@@ -19,6 +19,8 @@ import { getSession, useSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
 import Footer from '../components/Footer'
 
+import nookies from 'nookies'
+
 export default function Home() {
   const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
 
@@ -113,10 +115,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
   if (session) {
+
+    nookies.set(context, 'tokenUser', session.user.token, {
+      maxAge: 30 * 24 * 60 * 60,
+      path: '/',
+    });
+
     if (session.user.role.includes('ADMIN') || session.user.role.includes('MANAGER')) {
       return {
         redirect: {
-          destination: '/admin/create-trail',
+          destination: '/admin',
           permanent: false
         }
       }
