@@ -13,16 +13,40 @@ export default function Footer() {
         </div>
         <div className={Styles.social_row}>
           <div className={Styles.white_box}>
-            <FaFacebookF size={20} color="black" />
+            <a
+              href="https://www.facebook.com/orangejuicefc/"
+              target={"_blank"}
+              rel="noreferrer"
+            >
+              <FaFacebookF size={20} color="black" />
+            </a>
           </div>
           <div className={Styles.white_box}>
-            <AiFillInstagram size={24} color="black" />
+            <a
+              href="https://www.instagram.com/orangejuicetech/"
+              target={"_blank"}
+              rel="noreferrer"
+            >
+              <AiFillInstagram size={24} color="black" />
+            </a>
           </div>
           <div className={Styles.white_box}>
-            <FaLinkedin size={20} color="black" />
+            <a
+              href="https://www.linkedin.com/company/orangejuicetech/"
+              target={"_blank"}
+              rel="noreferrer"
+            >
+              <FaLinkedin size={20} color="black" />
+            </a>
           </div>
           <div className={Styles.white_box}>
-            <FaYoutube size={22} color="black" />
+            <a
+              href="https://www.youtube.com/c/OrangeJuicefc"
+              target={"_blank"}
+              rel="noreferrer"
+            >
+              <FaYoutube size={22} color="black" />
+            </a>
           </div>
         </div>
       </div>
