@@ -17,6 +17,7 @@ import cubos from '../public/assets/images/cubos.svg';
 import Login from '../components/Authentication/Login'
 import { getSession, useSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
+import Footer from '../components/Footer'
 
 export default function Home() {
   const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
@@ -102,6 +103,8 @@ export default function Home() {
 
         </header>
       </main>
+
+      <Footer />
     </div>
   )
 }
