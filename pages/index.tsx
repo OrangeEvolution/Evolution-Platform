@@ -21,13 +21,15 @@ import { GetServerSideProps } from 'next'
 import Footer from '../components/Footer'
 
 import nookies from 'nookies'
+import { useRouter } from 'next/router'
 
 export default function Home() {
   const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
+  const [visibleButtonMobile, setVisibleButtonMobile] = useState<boolean>();
+
+  const router = useRouter();
 
   const { data: session } = useSession();
-
-  const [visibleButtonMobile, setVisibleButtonMobile] = useState<boolean>();
 
   const handlerShowLoginForm = (status: boolean) => {
     setShowLoginForm(status);
@@ -43,12 +45,12 @@ export default function Home() {
               <Link href='#'>SAIBA MAIS</Link>
             </li>
             <li>
-              {!session && <button className={styles.buttonRegister} onClick={(e) => { e.preventDefault(), setShowLoginForm(false) }}>CADASTRE-SE</button>}
+              {!session && <button className={styles.buttonRegister} onClick={(e) => { e.preventDefault(), setShowLoginForm(false), router.push('/#auth') }}>CADASTRE-SE</button>}
             </li>
             <li>
               {session
                 ? <button className={styles.buttonLogin} onClick={() => signOut()}>DESLOGAR</button>
-                : <button className={styles.buttonLogin}>LOGIN</button>
+                : <button className={styles.buttonLogin} onClick={(e) => { e.preventDefault(), setShowLoginForm(true), router.push('/#auth') }}>LOGIN</button>
               }
             </li>
           </ul>
@@ -70,7 +72,7 @@ export default function Home() {
             <Link href='#'>Comece a aprender de graça</Link>
           </section>
 
-          <section className={styles.authentication}>
+          <section className={styles.authentication} id="auth">
             <div className="content">
               {showLoginForm
                 ? <Login showRegisterForm={handlerShowLoginForm} />
