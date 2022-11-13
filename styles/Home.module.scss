@@ -8,6 +8,74 @@
     margin: 0 auto;
     padding: 0 10px;
 
+    nav {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      img {
+        max-width: 90px;
+        max-height: 90px;
+        visibility: hidden;
+      }
+
+      ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+
+        li {
+          list-style: none;
+
+          a {
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 0.5px;
+            color: var(--white);
+          }
+
+          .buttonLogin {
+            background: var(--white);
+            border: 1px solid #000000;
+            border-radius: 4px;
+            padding: 16px 35px;
+
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 0.5px;
+
+            color: var(--blue-dark);
+          }
+
+          .buttonRegister {
+            background-color: transparent;
+            border: 2px solid #FFFFFF;
+            border-radius: 4px;
+            padding: 14px 4px;
+          }
+
+          button {
+            transition: filter 0.3s;
+
+            &:hover {
+              filter: brightness(0.8);
+            }
+          
+          }
+        }
+      }
+
+      .menuMobile {
+        background: transparent;
+        border: none;
+        display: none;
+      }
+    }
+
     header {
       display: flex;
       justify-content: center;
@@ -25,7 +93,7 @@
         gap: 15px;
 
         img {
-          display: none;
+          margin-top: -20px;
         }
 
         h1 {
@@ -211,6 +279,47 @@
 
 @media (max-width: 768px) {
   .container {
+
+    .main {
+      nav {
+        position: relative;
+        img {
+          visibility: visible;
+        }
+
+        ul {
+          display: none;
+          position: absolute;
+          top: 80px;
+          left: 0;
+          flex-direction: column;
+          width: 100%;
+          padding: 10px;
+          background: linear-gradient(197.28deg, rgba(253, 117, 0, 0.2) 41.5%, rgba(57, 62, 70, 0.2) 91.02%), rgba(0, 0, 0, 0.99);
+          border-left: 1px solid rgba(255, 119, 0, 0.2);
+          border-right: 1px solid rgba(255, 119, 0, 0.2);
+          border-bottom: 1px solid rgba(255, 119, 0, 0.2);
+          border-radius: 0px 0px 10px 10px;
+          
+          li {
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+          }
+
+          transition: all 1px;
+
+          &.visible {
+            display: block;
+          }
+        }
+
+        .menuMobile {
+          display: block;
+        }
+      }
+    }
+
     header {
       flex-direction: column;
       gap: 20px;
@@ -219,7 +328,6 @@
         width: 100%;
 
         img {
-          display: block !important;
           margin: 0 auto;
           margin-bottom: -50px;
         }

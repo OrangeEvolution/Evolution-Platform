@@ -8,6 +8,7 @@ import Register from '../components/Authentication/Register'
 import FullstackWhite from '../public/assets/icons/fullstack-white.svg';
 import UxWhite from '../public/assets/icons/ux-white.svg';
 import QaWhite from '../public/assets/icons/qa-white.svg';
+import Menu from '../public/assets/icons/menu.svg';
 
 import orangeEvolution from '../public/assets/images/orange-logo.svg';
 import fcamara from '../public/assets/images/fcamara.svg';
@@ -15,7 +16,7 @@ import alura from '../public/assets/images/alura.svg';
 import rocketseat from '../public/assets/images/rocketseat.svg';
 import cubos from '../public/assets/images/cubos.svg';
 import Login from '../components/Authentication/Login'
-import { getSession, useSession } from 'next-auth/react'
+import { getSession, signOut, useSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
 import Footer from '../components/Footer'
 
@@ -24,10 +25,9 @@ import nookies from 'nookies'
 export default function Home() {
   const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
 
-  const { status, data } = useSession();
+  const { data: session } = useSession();
 
-  console.log(status)
-  console.log(data)
+  const [visibleButtonMobile, setVisibleButtonMobile] = useState<boolean>();
 
   const handlerShowLoginForm = (status: boolean) => {
     setShowLoginForm(status);
@@ -36,8 +36,28 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <header>
+        <nav>
+          <Image src={orangeEvolution} alt="Logo da Orange Juice Evolution" />
+          <ul className={visibleButtonMobile ? styles.visible : ''}>
+            <li>
+              <Link href='#'>SAIBA MAIS</Link>
+            </li>
+            <li>
+              {!session && <button className={styles.buttonRegister} onClick={(e) => { e.preventDefault(), setShowLoginForm(false) }}>CADASTRE-SE</button>}
+            </li>
+            <li>
+              {session
+                ? <button className={styles.buttonLogin} onClick={() => signOut()}>DESLOGAR</button>
+                : <button className={styles.buttonLogin}>LOGIN</button>
+              }
+            </li>
+          </ul>
+          <button className={styles.menuMobile} onClick={(e) => { e.preventDefault(), setVisibleButtonMobile(!visibleButtonMobile) }}>
+            <Image src={Menu} alt='' />
+          </button>
+        </nav>
 
+        <header>
           <section className={styles.presentation}>
             <Image src={orangeEvolution} alt='Logo da Orange Evolution' />
             <h1>Evolua a sua carreira<br />na tecnologia</h1>
@@ -121,21 +141,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       path: '/',
     });
 
-    if (session.user.role.includes('ADMIN') || session.user.role.includes('MANAGER')) {
+    /*if (session.user.role.includes('ADMIN') || session.user.role.includes('MANAGER')) {
       return {
         redirect: {
           destination: '/admin',
           permanent: false
         }
       }
-    } else {
-      /*return {
-        redirect: {
-          destination: '/trails',
-          permanent: false
-        }
-      }*/
-    }
+    } else {*/
+    /*return {
+      redirect: {
+        destination: '/trails',
+        permanent: false
+      }
+    }*/
+    //}
   }
 
   return {
