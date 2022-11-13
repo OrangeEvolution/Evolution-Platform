@@ -13,6 +13,8 @@ import { findAll } from "../../services/trails";
 import { Trail } from "../../Types/Trail";
 import Modal from "../../components/Modal";
 import { useState } from "react";
+import { addTrailToUser } from "../../services/user";
+import { notifyError, notifySuccess } from "../../util/notifyToast";
 
 type ChooseProps = {
     trails: Trail[];
@@ -21,6 +23,27 @@ type ChooseProps = {
 export default function Choose({ trails }: ChooseProps) {
     const { data: session } = useSession();
     const [openModalTrails, setOpenModalTrails] = useState<boolean>(false);
+    const [openModalChooseTrail, setOpenModalChooseTrail] = useState<boolean>(false);
+
+    const [selectedTrail, setSelectedTrail] = useState<Trail | null>(null);
+
+    function handleOpenModalSelectedTrail(trail: Trail) {
+        setSelectedTrail(trail);
+        setOpenModalChooseTrail(true);
+    }
+
+    async function handleSelectTrail(trailId: number) {
+        let res = await addTrailToUser(trailId, session?.user.token);
+
+        console.log(res);
+
+
+        if (res !== null) {
+            notifySuccess('Trilha adicionada com sucesso!');
+        } else {
+            notifyError('Ocorreu um erro na selação da trilha!');
+        }
+    }
 
     return (
         <>
@@ -43,6 +66,23 @@ export default function Choose({ trails }: ChooseProps) {
                     </div>
                 </Modal>
 
+                <Modal
+                    openModal={openModalChooseTrail}
+                    closeModal={() => setOpenModalChooseTrail(false)}
+                >
+                    <div className={styles.modalSelectedTrail}>
+                        <h2>Deseja seleciona a trilha: <span>{selectedTrail?.name}</span></h2>
+                        <h3>Informações da trilha:</h3>
+                        <div className={styles.infosTrailSelected}>
+                            <strong>Trilha:</strong> {selectedTrail?.name}
+                            <strong>Descrição:</strong> {selectedTrail?.description}
+                            <strong>Montada por: </strong> {selectedTrail?.mounted_by}
+
+                            <button onClick={(e) => { e.preventDefault(), handleSelectTrail(selectedTrail?.id!) }}>Selecionar Trilha</button>
+                        </div>
+                    </div>
+                </Modal>
+
                 <Head>
                     <title>Escolha uma trilha | Orange Evolution</title>
                 </Head>
@@ -60,7 +100,7 @@ export default function Choose({ trails }: ChooseProps) {
                 <section>
                     <div className={styles.trails}>
                         {trails.map((trail) => (
-                            <button className={styles.card} key={trail.id}>
+                            <button className={styles.card} key={trail.id} onClick={(e) => { e.preventDefault(), handleOpenModalSelectedTrail(trail) }}>
                                 <Image src={TrailImage} alt='' />
                                 <div className={styles.content}>
                                     <span>Aprenda {trail.name}</span>
@@ -81,7 +121,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context);
 
     const res = await findAll(session?.user.token);
-    console.log(res._embedded.trailVOList)
 
     return {
         props: {

@@ -58,15 +58,19 @@ export async function deleteUser(id: number) {
         return error;
     }
 }
-export async function addTrailToUser(idTrail: number) {
+export async function addTrailToUser(idTrail: number, token: string) {
     try {
-        let res = await api.patch(`/api/user/addtrail/${idTrail}`)
+        let res = await api.patch(`/api/user/addtrail/${idTrail}`, '', {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
 
         if (res.data) {
             return res.data;
         }
     } catch (error) {
-        return error;
+        return null;
     }
 
 }
