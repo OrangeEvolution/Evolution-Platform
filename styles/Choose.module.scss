@@ -1,0 +1,110 @@
+.container {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+
+    header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        h2 {
+            text-align: center;
+            font-weight: 900;
+            font-size: 32px;
+            line-height: 117.5%;
+            margin-bottom: 30px;
+            color: var(--white);
+
+            span {
+                color: var(--orange);
+            }
+        }
+
+        .info {
+            font-weight: 900;
+            font-size: 16px;
+            line-height: 19px;
+            text-align: center;
+
+            color: #FFFFFF;
+        }
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+
+        margin: 50px 0px;
+
+        .trails {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+
+            .card {
+                width: 345px;
+                height: 190px;
+                background: linear-gradient(180deg, rgba(52, 168, 83, 0.3) 0%, rgba(253, 117, 0, 0.3) 100%), #F5F5F5;
+                border-radius: 10px;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                border: none;
+                transition: filter 0.3s;
+
+                &:hover {
+                    filter: brightness(0.8);
+                }
+
+                img {
+                    flex: 4;
+                }
+
+                .content {
+                    flex: 1;
+                    border-top: 1px solid var(--blue-dark);
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    span {
+                        font-family: 'Gothic A1';
+                        font-style: normal;
+                        font-weight: 700;
+                        font-size: 14px;
+                        line-height: 160.62%;
+                        text-align: center;
+
+                        color: var(--black);
+                    }
+                }
+            }
+        }
+
+        p {
+            font-family: 'Gothic A1';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 13px;
+            line-height: 16px;
+            text-align: center;
+
+            color: var(--white);
+
+            a {
+                color: var(--orange);
+            }
+        }
+    }
+}
