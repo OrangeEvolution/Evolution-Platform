@@ -40,10 +40,15 @@
 
             height: 200px;
     
-            a {
+            button {
                 padding: 10px;
                 background: #34A853;
                 border: none;
+                transition: filter 0.3s;
+
+                &:hover {
+                    filter: brightness(0.9);
+                }
             }
         }
 
@@ -94,6 +99,44 @@
                     }
                 }
             }
+        }
+    }
+
+    form {
+        color: var(--blue-dark);
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: flex-start;
+        gap: 17px;
+
+        h2 {
+            text-align: center;
+            width: 100%;
+        }
+
+        label {
+            margin-bottom: -15px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px 15px;
+            background-color: var(--white);
+            color: var(--blue-dark);
+            border: 1px solid #D9D9D9;
+            border-radius: 8px;
+        }
+
+        button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
         }
     }
 }

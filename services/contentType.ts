@@ -24,10 +24,14 @@ export async function findById(id: number) {
     }
 
 }
-export async function findAll() {
+export async function findAll(token: string) {
     try {
         let params = "/api/content-type/"
-        let res = await api.get(params)
+        let res = await api.get(params, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
 
         if (res.data) {
             return res.data;
