@@ -1,8 +1,12 @@
 import { api } from "./api";
 
-export async function create(content: object) {
+export async function create(content: object, token: string) {
     try {
-        let res = await api.post(`/api/content/`, content);
+        let res = await api.post(`/api/content`, content, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        });
 
         if (res.data) {
             return res.data;
@@ -23,10 +27,14 @@ export async function findById(id: number) {
     }
 
 }
-export async function findAll() {
+export async function findAll(token: string) {
     try {
         let params = "/api/content/"
-        let res = await api.get(params)
+        let res = await api.get(params, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
 
         if (res.data) {
             return res.data;
