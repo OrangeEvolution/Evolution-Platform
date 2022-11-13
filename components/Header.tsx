@@ -1,5 +1,5 @@
 import Styles from '../styles/Header.module.scss';
-import orangeEvolution from '../public/assets/images/orange-evo.svg';
+import orangeEvolution from '../public/assets/icons/orange-evo.svg';
 import logoutImg from '../public/assets/icons/Logout.svg';
 
 import Image from 'next/image'
@@ -10,8 +10,10 @@ export default function Header() {
             <div className={Styles.image_box}>
                 <Image src={orangeEvolution} alt='Logo da Orange Evolution' />
             </div>
+            <div className={Styles.discord_box}>
             <Discord />
-
+            </div>
+            
             <div className={Styles.logout}>
                 <Image src={logoutImg} alt='Sair' />
                 <a className={Styles.buttonLogout}>Sair</a>
