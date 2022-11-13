@@ -1,0 +1,41 @@
+.container {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 88px;
+
+
+
+    .discord_box {
+        top: 25px;
+        right: 124px;
+
+    }
+
+    .image_box {
+        width: 130px;
+        height: 140px;
+        left: 40px;
+        top: 13px;
+    }
+    .logout {
+        position: absolute;
+        width: 64px;
+        height: 26px;
+        left: 1332px;
+        top: 69px;
+    
+        .buttonLogout {
+            font-family: 'Gothic A1';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 160.62%;
+            left: 11px;
+    
+            background: linear-gradient(242.84deg, rgba(52, 25, 2, 0.176) 61.75%, rgba(253, 117, 0, 0) 98.34%), #341902;
+            color: #FFFFFF;
+        }
+    }
+}
