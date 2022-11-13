@@ -29,7 +29,18 @@ export default function Choose({ trails }: ChooseProps) {
                     openModal={openModalTrails}
                     closeModal={() => setOpenModalTrails(false)}
                 >
-                    infos sobre as trilhas!
+                    <div className={styles.trailsInfos}>
+                        <>
+                            <h2>Saiba mais sobre as trilhas!</h2>
+                            {trails.map((trail) => (
+                                <ul key={trail.id}>
+                                    <p><strong>Trilha: {trail.name}</strong></p>
+                                    <li><strong>Descrição:</strong> {trail.description}</li>
+                                    <li><strong>Trilha montada por:</strong> {trail.mounted_by}</li>
+                                </ul>
+                            ))}
+                        </>
+                    </div>
                 </Modal>
 
                 <Head>
