@@ -22,6 +22,7 @@ import Footer from '../components/Footer'
 
 import nookies from 'nookies'
 import { useRouter } from 'next/router'
+import { findById } from '../services/user'
 
 export default function Home() {
   const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
@@ -137,12 +138,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
   if (session) {
+    let user = await findById(session.user.id, session.user.token);
 
-    nookies.set(context, 'tokenUser', session.user.token, {
-      maxAge: 30 * 24 * 60 * 60,
-      path: '/',
-    });
-
+    if (user.trails.length === 0 && !(session.user.role.includes('ADMIN') || session.user.role.includes('MANAGER'))) {
+      return {
+        redirect: {
+          destination: '/trails/choose',
+          permanent: false
+        }
+      }
+    }
     /*if (session.user.role.includes('ADMIN') || session.user.role.includes('MANAGER')) {
       return {
         redirect: {
@@ -150,14 +155,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           permanent: false
         }
       }
-    } else {*/
-    /*return {
-      redirect: {
-        destination: '/trails',
-        permanent: false
+    } else {
+      return {
+        redirect: {
+          destination: '/trails',
+          permanent: false
+        }
       }
     }*/
-    //}
   }
 
   return {

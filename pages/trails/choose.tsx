@@ -15,12 +15,14 @@ import Modal from "../../components/Modal";
 import { useState } from "react";
 import { addTrailToUser } from "../../services/user";
 import { notifyError, notifySuccess } from "../../util/notifyToast";
+import { useRouter } from "next/router";
 
 type ChooseProps = {
     trails: Trail[];
 }
 
 export default function Choose({ trails }: ChooseProps) {
+    const router = useRouter();
     const { data: session } = useSession();
     const [openModalTrails, setOpenModalTrails] = useState<boolean>(false);
     const [openModalChooseTrail, setOpenModalChooseTrail] = useState<boolean>(false);
@@ -40,6 +42,8 @@ export default function Choose({ trails }: ChooseProps) {
 
         if (res !== null) {
             notifySuccess('Trilha adicionada com sucesso!');
+            setOpenModalChooseTrail(false);
+            router.push('/');
         } else {
             notifyError('Ocorreu um erro na selação da trilha!');
         }

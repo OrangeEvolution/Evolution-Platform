@@ -11,9 +11,13 @@ export async function registerUser(userName: string, fullName: string, password:
         return error;
     }
 }
-export async function findById(id: number) {
+export async function findById(id: number, token: string) {
     try {
-        let res = await api.get(`/api/user/${id}`)
+        let res = await api.get(`/api/user/${id}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
 
         if (res.data) {
             return res.data;
@@ -86,9 +90,13 @@ export async function removeTrailToUser(idTrail: number) {
     }
 
 }
-export async function findFullTrailById(id: number) {
+export async function findFullTrailById(id: number, token: string) {
     try {
-        let res = await api.get(`/api/user/findfull/${id}`)
+        let res = await api.get(`/api/user/findfull/${id}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
 
         if (res.data) {
             return res.data;
