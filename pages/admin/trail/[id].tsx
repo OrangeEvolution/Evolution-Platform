@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import { getSession, useSession } from "next-auth/react";
-import Router,{ useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { findById, findFullTrailById } from "../../../services/trails";
 import { Trail } from "../../../Types/Trail";
 
@@ -73,11 +73,11 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
                 link: link
             }, session?.user.token);
 
-            notifySuccess(`Conteúdo "${res.description}" cadastrado com sucesso!`);
-            setOpenModal(false);
+            notifySuccess(`Conteúdo "${res.description}" Atualizado com sucesso!`);
+            setOpenModalTwo(false);
             clearForm();
             Router.reload(window.location.pathname);
-            
+
         } else {
             notifyError('Atenção! Existem campos vázios');
         }
@@ -168,7 +168,7 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
                             <input type="text" id="duration" value={duration} onChange={(e) => setDuration(e.target.value)} />
 
                             <label htmlFor="category">Categoria</label>
-                            <select id="category" onChange={(e) => setCategory(e.target.value)}value={category}>
+                            <select id="category" onChange={(e) => setCategory(e.target.value)} value={category}>
                                 <option value="">Selecione</option>
                                 {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
                             </select>
@@ -194,7 +194,7 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
                             <li>
                                 {category.name}
                                 <ul>
-                                    {category.contents.map((content) => <Link href={'#'}><li><button onClick={(e) => { e.preventDefault(), fillForm(content), setOpenModalTwo(true) }}>{content.description}{console.log(content)}</button></li></Link>)}
+                                    {category.contents.map((content) => <Link href={'#'}><li><button onClick={(e) => { e.preventDefault(), fillForm(content), setOpenModalTwo(true) }}>{content.description}</button></li></Link>)}
                                 </ul>
                             </li>
                         ))}

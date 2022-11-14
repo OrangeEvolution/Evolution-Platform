@@ -90,6 +90,23 @@ export async function removeCategoryToTrail(idTrail: number, idCategory: number)
     }
 
 }
+
+export async function findFullTrailByIdAndProgress(id: number, token: string) {
+    try {
+        let res = await api.get(`/api/trails/findfullProgress/${id}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
+
+        if (res.data) {
+            return res.data;
+        }
+    } catch (error) {
+        return error;
+    }
+
+}
 export async function findFullTrailById(id: number, token: string) {
     try {
         let res = await api.get(`/api/trails/findfull/${id}`, {

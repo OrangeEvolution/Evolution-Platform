@@ -23,10 +23,30 @@ export async function findById(id: number) {
     }
 
 }
-export async function findAll() {
+export async function findContentId(id: number,token:string) {
+    try {
+        let res = await api.get(`/api/progress/content/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
+        if (res.data) {
+            return res.data;
+        }
+    } catch (error) {
+        return error;
+    }
+
+}
+export async function findAll(token: String) {
     try {
         let params = "/api/progress/"
-        let res = await api.get(params)
+        let res = await api.get(params, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
 
         if (res.data) {
             return res.data;
@@ -35,9 +55,13 @@ export async function findAll() {
         return error;
     }
 }
-export async function update(id: number, progress: object) {
+export async function updateProgress(id: number, progress: object, token: string) {
     try {
-        let res = await api.put(`/api/progress/${id}`, progress)
+        let res = await api.put(`/api/progress/${id}`, progress, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
 
         if (res.data) {
             return res.data;

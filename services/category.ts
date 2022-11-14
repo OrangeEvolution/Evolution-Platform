@@ -1,9 +1,13 @@
 import { api } from "./api";
 
 
-export async function createCategory(category: object) {
+export async function createCategory(category: object, token:string) {
     try {
-        let res = await api.post(`/api/category/`, category);
+        let res = await api.post(`/api/category/`, category,{
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
 
         if (res.data) {
             return res.data;
@@ -40,10 +44,13 @@ export async function findAll(token: string) {
         return error;
     }
 }
-export async function update(id: number, category: object) {
+export async function update(id: number, category: object, token:string) {
     try {
-        let res = await api.put(`/api/category/${id}`, category)
-
+        let res = await api.put(`/api/category/${id}`, category,{
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
         if (res.data) {
             return res.data;
         }
