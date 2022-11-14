@@ -13,6 +13,7 @@ import Modal from '../../components/Modal';
 import { addTrailToUser, findById } from '../../services/user';
 import { notifyError, notifySuccess } from '../../util/notifyToast';
 import { useRouter } from 'next/router';
+import Header from '../../components/Header';
 
 type UserProps = {
     trails: Trail[]
@@ -92,6 +93,8 @@ export default function User({ trails }: UserProps) {
                 </div>
 
             </Modal>
+
+            <Header />
 
             <div className={styles.welcome}>
                 <div className={styles.user}>

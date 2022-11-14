@@ -1,37 +1,112 @@
 .container {
     width: 100%;
-    max-width: 1120px;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 
+    .image_box {
+        width: 130px;
+        height: 140px;
+    }
+
+    .menuIcon {
+        display: none;
+    }
+
+    .contentRight {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+        
+        .logout {
+            width: 64px;
+            height: 26px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        
+            .buttonLogout {
+                font-family: 'Gothic A1';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 15px;
+                line-height: 160.62%;
+                left: 11px;
+                color: #FFFFFF;
+            }
+        }
+    }
 }
 
-.discord_box {
-    position: relative;
-    margin-left: 80%;
-    top: 28px;
-}
+@media (max-width: 768px) {
+    .container {
+        position: relative;
 
-.image_box {
-    position: relative;
-    width: 130px;
-    height: 140px;
-    left: 40px;
-}
+        .image_box {
+            margin-top: -40px;
+            margin-bottom: 30px;
+            width: 66px !important;
+            height: 73px;
 
-.logout {
-    position: relative;
-    width: 64px;
-    height: 26px;
-    left: 90%px;
-    top: 69px;
+            img {
+                width: 100%;
+            }
+        }
+        
+        button {
+            border: none;
+            background-color: transparent;
+            .menuIcon {
+                display: block;
+                margin-top: -28px;
+            }
+        }
 
-    .buttonLogout {
-        font-family: 'Gothic A1';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 15px;
-        line-height: 160.62%;
-        left: 11px;
-        color: #FFFFFF;
+        .contentRight {
+            position: absolute;
+            top: 60px;
+            background: linear-gradient(197.28deg, rgba(253, 117, 0, 0.2) 41.5%, rgba(57, 62, 70, 0.2) 91.02%), rgba(0, 0, 0, 0.99);
+
+            border-left: 1px solid rgba(255, 119, 0, 0.2);
+            border-right: 1px solid rgba(255, 119, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 119, 0, 0.2);
+            border-radius: 0px 0px 10px 10px;
+            
+            width: 100%;
+            padding: 10px;
+
+            display: none;
+            flex-direction: column;
+
+            z-index: 99;
+
+            &.visible {
+                display: flex !important;
+            }
+
+            .logout {
+                width: 64px;
+                height: 26px;
+    
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+            
+                .buttonLogout {
+                    font-family: 'Gothic A1';
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 15px;
+                    line-height: 160.62%;
+                    left: 11px;
+                    color: #FFFFFF;
+                }
+            }
+        }
     }
 }

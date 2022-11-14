@@ -152,7 +152,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       signOut();
     }
 
-    /*if (session.user.role.includes('ADMIN') || session.user.role.includes('MANAGER')) {
+    if (session.user.role.includes('ADMIN') || session.user.role.includes('MANAGER')) {
       return {
         redirect: {
           destination: '/admin',
@@ -162,11 +162,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     } else {
       return {
         redirect: {
-          destination: '/trails',
+          destination: '/user',
           permanent: false
         }
       }
-    }*/
+    }
   }
 
   return {
