@@ -138,16 +138,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
   if (session) {
-    let user = await findById(session.user.id, session.user.token);
-
-    if (user.trails.length === 0 && !(session.user.role.includes('ADMIN') || session.user.role.includes('MANAGER'))) {
-      return {
-        redirect: {
-          destination: '/trails/choose',
-          permanent: false
+    try {
+      let user = await findById(session.user.id, session.user.token);
+      if (user.trails.length === 0 && !(session.user.role.includes('ADMIN') || session.user.role.includes('MANAGER'))) {
+        return {
+          redirect: {
+            destination: '/trails/choose',
+            permanent: false
+          }
         }
       }
+    } catch (error) {
+      signOut();
     }
+
     /*if (session.user.role.includes('ADMIN') || session.user.role.includes('MANAGER')) {
       return {
         redirect: {
