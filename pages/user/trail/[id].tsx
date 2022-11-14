@@ -33,6 +33,19 @@ export default function ContentDetails({ trail, contentsTypes }: TrailProps) {
     return typeName;
   }
 
+  function getProgressName(progress: string) {
+    switch (progress) {
+      case 'CONCLUDED':
+        return 'Concluido';
+        break;
+      case 'NOT_COMPLETED':
+        return 'Não concluído';
+      default:
+        return progress;
+        break;
+    }
+  }
+
   return (
     <>
       <div className={Styles.container}>
@@ -67,7 +80,7 @@ export default function ContentDetails({ trail, contentsTypes }: TrailProps) {
                       <ul>
                         <li>{getContentTypeName(content.contentType)}</li>
                         <li>{content.durationInMinutes} minutos</li>
-                        <li>{content.progressEnum}</li>
+                        <li>{getProgressName(content.progressEnum)}</li>
                         <li>{content.partner}</li>
                       </ul>
                     </Link>
