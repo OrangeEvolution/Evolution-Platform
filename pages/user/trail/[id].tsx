@@ -75,8 +75,6 @@ export default function ContentDetails({ trail, contentsTypes }: TrailProps) {
                   {category.contents.map((content) => (
                     <Link href={content.link} target='_blank' className={Styles.items} key={content.id}>
                       <p><strong>{content.description}</strong></p>
-                      <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde, accusamus eaque beatae delectus omnis magnam deleniti cum velit alias ipsum exercitationem commodi?</span>
-
                       <ul>
                         <li>{getContentTypeName(content.contentType)}</li>
                         <li>{content.durationInMinutes} minutos</li>
