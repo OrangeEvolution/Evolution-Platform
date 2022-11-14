@@ -6,6 +6,8 @@ import Menu from '../public/assets/icons/menu.svg';
 import Image from 'next/image'
 import Discord from './discord';
 import { useState } from 'react';
+import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 
 
 export default function Header() {
@@ -25,7 +27,7 @@ export default function Header() {
 
                 <div className={Styles.logout}>
                     <Image src={logoutImg} alt='Sair' />
-                    <a className={Styles.buttonLogout}>Sair</a>
+                    <Link href='javascript:;' onClick={() => signOut()} className={Styles.buttonLogout}>Sair</Link>
                 </div>
             </div>
         </div>

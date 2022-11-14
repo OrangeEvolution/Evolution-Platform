@@ -5,8 +5,6 @@ import { getSession, useSession } from "next-auth/react";
 import { findById, findFullTrailById } from "../../../services/trails";
 import { Trail } from "../../../Types/Trail";
 
-
-
 import React from "react";
 import { findAll } from "../../../services/contentType";
 import { findAll as findAllContent } from "../../../services/category";
@@ -21,6 +19,8 @@ export default function ContentDetails({ trail }: TrailProps) {
   return (
     <>
       <div className={Styles.container}>
+        <Header />
+
         <div className={Styles.welcome}>
           <p>Olá, {session?.user.name}!</p>
           <span>Você está na trilha:</span><p>{trail.name}</p>

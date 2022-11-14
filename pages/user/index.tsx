@@ -14,6 +14,7 @@ import { addTrailToUser, findById } from '../../services/user';
 import { notifyError, notifySuccess } from '../../util/notifyToast';
 import { useRouter } from 'next/router';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 type UserProps = {
     trails: Trail[]
@@ -69,57 +70,60 @@ export default function User({ trails }: UserProps) {
     }
 
     return (
-        <div className={styles.container}>
-            <Head>
-                <title>Sua trilhas | Orange Evolution</title>
-            </Head>
+        <>
+            <div className={styles.container}>
+                <Head>
+                    <title>Sua trilhas | Orange Evolution</title>
+                </Head>
 
-            <Modal
-                openModal={openModal}
-                closeModal={() => setOpenModal(false)}
-            >
-                <div className={styles.newTrail}>
-                    <h1>Se inscreva em uma nova trilha</h1>
-                    <span>Clique em uma trilha para se inscrever.</span>
-                    <div className={styles.items}>
-                        {newTrails?.map((trail) => (
-                            <button key={trail.id} onClick={(e) => { e.preventDefault(), handleSelectTrail(trail.id) }}>
-                                <span><strong>Trilha:</strong> {trail.name}</span>
-                                <span>{trail.description}</span>
-                                <span><strong>Montada por:</strong> {trail.mounted_by}</span>
-                            </button>
+                <Modal
+                    openModal={openModal}
+                    closeModal={() => setOpenModal(false)}
+                >
+                    <div className={styles.newTrail}>
+                        <h1>Se inscreva em uma nova trilha</h1>
+                        <span>Clique em uma trilha para se inscrever.</span>
+                        <div className={styles.items}>
+                            {newTrails?.map((trail) => (
+                                <button key={trail.id} onClick={(e) => { e.preventDefault(), handleSelectTrail(trail.id) }}>
+                                    <span><strong>Trilha:</strong> {trail.name}</span>
+                                    <span>{trail.description}</span>
+                                    <span><strong>Montada por:</strong> {trail.mounted_by}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                </Modal>
+
+                <Header />
+
+                <div className={styles.welcome}>
+                    <div className={styles.user}>
+                        <p>Olá, {session?.user.name}!</p>
+                        <span>Veja as trilhas que está cadastrado:</span>
+                    </div>
+                    <button onClick={(e) => { e.preventDefault(), openModalTrails() }}>Adicionar nova trilha</button>
+                </div>
+
+                <section>
+                    <div className={styles.trails}>
+                        {trails.map((trail) => (
+                            <Link href={`/user/trail/${trail.id}`} key={trail.id}>
+                                <Image src={TrailImage} alt={trail.name} />
+                                <div className={styles.infos}>
+                                    <p><strong>{trail.name}</strong></p>
+                                    <span>{trail.description}</span>
+                                    <span className={styles.mountedBy}><strong>Trilha montada por: </strong>{trail.mounted_by}</span>
+                                </div>
+                            </Link>
                         ))}
                     </div>
-                </div>
+                </section>
 
-            </Modal>
-
-            <Header />
-
-            <div className={styles.welcome}>
-                <div className={styles.user}>
-                    <p>Olá, {session?.user.name}!</p>
-                    <span>Veja as trilhas que está cadastrado:</span>
-                </div>
-                <button onClick={(e) => { e.preventDefault(), openModalTrails() }}>Adicionar nova trilha</button>
             </div>
-
-            <section>
-                <div className={styles.trails}>
-                    {trails.map((trail) => (
-                        <Link href={`/user/trail/${trail.id}`} key={trail.id}>
-                            <Image src={TrailImage} alt={trail.name} />
-                            <div className={styles.infos}>
-                                <p><strong>{trail.name}</strong></p>
-                                <span>{trail.description}</span>
-                                <span className={styles.mountedBy}><strong>Trilha montada por: </strong>{trail.mounted_by}</span>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            </section>
-
-        </div>
+            <Footer />
+        </>
     )
 }
 

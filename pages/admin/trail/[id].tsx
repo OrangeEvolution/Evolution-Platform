@@ -15,6 +15,8 @@ import { findAll } from "../../../services/contentType";
 import { findAll as findAllContent } from "../../../services/category";
 import { notifyError, notifySuccess } from "../../../util/notifyToast";
 import { create } from "../../../services/content";
+import Header from "../../../components/Header";
+import Footer from "../../../components/Footer";
 
 type TrailProps = {
     trail: any;
@@ -65,68 +67,73 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
     }
 
     return (
-        <div className={styles.container}>
-            <Modal
-                openModal={openModal}
-                closeModal={() => setOpenModal(false)}
-            >
-                <form onSubmit={handleSubmitNewContent}>
-                    <h2>Adicionar novo conteúdo</h2>
-                    <label htmlFor="name">Nome</label>
-                    <input type="text" id="name" value={description} onChange={(e) => setDescription(e.target.value)} />
+        <>
+            <div className={styles.container}>
+                <Header />
 
-                    <label htmlFor="duration">Duração</label>
-                    <input type="text" id="duration" value={duration} onChange={(e) => setDuration(e.target.value)} />
+                <Modal
+                    openModal={openModal}
+                    closeModal={() => setOpenModal(false)}
+                >
+                    <form onSubmit={handleSubmitNewContent}>
+                        <h2>Adicionar novo conteúdo</h2>
+                        <label htmlFor="name">Nome</label>
+                        <input type="text" id="name" value={description} onChange={(e) => setDescription(e.target.value)} />
 
-                    <label htmlFor="category">Categoria</label>
-                    <select id="category" onChange={(e) => setCategory(e.target.value)}>
-                        <option value="">Selecione</option>
-                        {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
-                    </select>
+                        <label htmlFor="duration">Duração</label>
+                        <input type="text" id="duration" value={duration} onChange={(e) => setDuration(e.target.value)} />
 
-                    <label htmlFor="type">Tipo</label>
-                    <select id="type" onChange={(e) => setType(e.target.value)}>
-                        <option value="">Selecione</option>
-                        {contentsTypes.map((content) => <option key={content.id} value={content.id}>{content.name}</option>)}
-                    </select>
+                        <label htmlFor="category">Categoria</label>
+                        <select id="category" onChange={(e) => setCategory(e.target.value)}>
+                            <option value="">Selecione</option>
+                            {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
+                        </select>
 
-                    <label htmlFor="content_by">Conteúdo por</label>
-                    <input type="text" id="content_by" value={contentBy} onChange={(e) => setContentBy(e.target.value)} />
+                        <label htmlFor="type">Tipo</label>
+                        <select id="type" onChange={(e) => setType(e.target.value)}>
+                            <option value="">Selecione</option>
+                            {contentsTypes.map((content) => <option key={content.id} value={content.id}>{content.name}</option>)}
+                        </select>
 
-                    <label htmlFor="link">Link</label>
-                    <input type="url" id="link" value={link} onChange={(e) => setLink(e.target.value)} />
+                        <label htmlFor="content_by">Conteúdo por</label>
+                        <input type="text" id="content_by" value={contentBy} onChange={(e) => setContentBy(e.target.value)} />
 
-                    <button type="submit">Cadastrar</button>
-                </form>
-            </Modal>
+                        <label htmlFor="link">Link</label>
+                        <input type="url" id="link" value={link} onChange={(e) => setLink(e.target.value)} />
 
-            <div className={styles.details}>
-                <header>
-                    <Image src={TrailImage} alt='Imagem da trilha' />
-                    <span>
-                        Trilha {trail.name}
-                    </span>
-                </header>
-                <div className={styles.content}>
-                    <button onClick={(e) => { e.preventDefault(), setOpenModal(true) }}>Adicionar um novo material</button>
-                    {/*<Link href={`/admin/content/create/${trail.id}`}>Adicionar um novo material</Link>*/}
+                        <button type="submit">Cadastrar</button>
+                    </form>
+                </Modal>
+
+                <div className={styles.details}>
+                    <header>
+                        <Image src={TrailImage} alt='Imagem da trilha' />
+                        <span>
+                            Trilha {trail.name}
+                        </span>
+                    </header>
+                    <div className={styles.content}>
+                        <button onClick={(e) => { e.preventDefault(), setOpenModal(true) }}>Adicionar um novo material</button>
+                        {/*<Link href={`/admin/content/create/${trail.id}`}>Adicionar um novo material</Link>*/}
+                    </div>
+                </div>
+
+                <div className={styles.contents}>
+                    <span>Atualizar um material existente</span>
+                    <ul>
+                        {trail.categories.map((category) => (
+                            <li>
+                                {category.name}
+                                <ul>
+                                    {category.contents.map((content) => <Link href={'#'}><li>{content.description}</li></Link>)}
+                                </ul>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             </div>
-
-            <div className={styles.contents}>
-                <span>Atualizar um material existente</span>
-                <ul>
-                    {trail.categories.map((category) => (
-                        <li>
-                            {category.name}
-                            <ul>
-                                {category.contents.map((content) => <Link href={'#'}><li>{content.description}</li></Link>)}
-                            </ul>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
+            <Footer />
+        </>
     )
 }
 

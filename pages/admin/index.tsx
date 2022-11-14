@@ -9,6 +9,8 @@ import { Trail } from '../../Types/Trail';
 
 import TrailImage from '../../public/assets/images/trails.svg';
 import Link from 'next/link';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 type AdminProps = {
     trails: Trail[]
@@ -20,29 +22,33 @@ export default function Admin({ trails }: AdminProps) {
     console.log(trails)
 
     return (
-        <div className={styles.container}>
-            <Head>
-                <title>Dashboard Admin | Orange Evolution</title>
-            </Head>
+        <>
+            <div className={styles.container}>
+                <Head>
+                    <title>Dashboard Admin | Orange Evolution</title>
+                </Head>
 
-            <div className={styles.welcome}>
-                <p>Olá, {session?.user.name}!</p>
-                <span>Administre as trilhas de conteúdos abaixo:</span>
-            </div>
+                <Header />
 
-            <section>
-                <span>Clique em cada trilha para adicionar ou atualizar cursos</span>
-                <div className={styles.trails}>
-                    {trails.map((trail) => (
-                        <Link href={`/admin/trail/${trail.id}`} key={trail.id}>
-                            <Image src={TrailImage} alt={trail.name} />
-                            <span>{trail.name}</span>
-                        </Link>
-                    ))}
+                <div className={styles.welcome}>
+                    <p>Olá, {session?.user.name}!</p>
+                    <span>Administre as trilhas de conteúdos abaixo:</span>
                 </div>
-            </section>
 
-        </div>
+                <section>
+                    <span>Clique em cada trilha para adicionar ou atualizar cursos</span>
+                    <div className={styles.trails}>
+                        {trails.map((trail) => (
+                            <Link href={`/admin/trail/${trail.id}`} key={trail.id}>
+                                <Image src={TrailImage} alt={trail.name} />
+                                <span>{trail.name}</span>
+                            </Link>
+                        ))}
+                    </div>
+                </section>
+            </div>
+            <Footer />
+        </>
     )
 }
 

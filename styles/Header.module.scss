@@ -9,7 +9,7 @@
         height: 140px;
     }
 
-    .menuIcon {
+    button {
         display: none;
     }
 
@@ -58,10 +58,10 @@
         }
         
         button {
+            display: block;
             border: none;
             background-color: transparent;
             .menuIcon {
-                display: block;
                 margin-top: -28px;
             }
         }
