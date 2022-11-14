@@ -7,7 +7,9 @@
     .welcome {
         margin: 20px 0;
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
         gap: 10px;
 
         p {
@@ -21,6 +23,18 @@
                 font-size: 12px;
                 line-height: 160.62%;
                 color: var(--white);
+            }
+        }
+
+        button {
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background: var(--green);
+            transition: filter 0.3s;
+
+            &:hover {
+                filter: brightness(0.8);
             }
         }
     }
@@ -71,6 +85,58 @@
                         padding-left: 5px;
                         border-left: 2px solid var(--blue-dark);
                     }
+                }
+            }
+        }
+    }
+
+    .newTrail {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 10px;
+        gap: 10px;
+
+        h1 {
+            font-family: 'Gothic A1';
+            font-style: normal;
+            font-weight: 900;
+            font-size: 24px;
+            line-height: 117.5%;
+            color: var(--blue-dark);
+        }
+
+        span {
+            font-family: 'Gothic A1';
+            font-size: 15px;
+            line-height: 117.5%;
+
+            color: var(--blue-dark);
+        }
+
+        .items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+
+            button {
+                border: none;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                padding: 15px;
+                background: linear-gradient(269.8deg, rgba(253, 117, 0, 0.3) 0.04%, rgba(52, 168, 83, 0.3) 99.7%), #F5F5F5;
+                border-radius: 10px;
+
+                span {
+                    text-align: left;
+                }
+
+                &:hover {
+                    filter: brightness(0.9);
                 }
             }
         }
