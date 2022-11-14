@@ -10,7 +10,7 @@
         border-radius: 10px;
 
         margin-bottom: 20px;
-        
+
         header {
             display: flex;
             justify-content: space-between;
@@ -28,7 +28,7 @@
                 color: var(--black);
             }
         }
-        
+
         .content {
             flex: 1;
             height: 100%;
@@ -40,7 +40,7 @@
             margin-top: 10px;
 
             height: 200px;
-    
+
             button {
                 padding: 10px;
                 background: #34A853;
@@ -54,7 +54,7 @@
         }
 
     }
-    
+
     .contents {
         background: linear-gradient(269.8deg, rgba(253, 117, 0, 0.1) 0.04%, rgba(52, 168, 83, 0.1) 99.7%), #F5F5F5;
         border-radius: 10px;
@@ -92,6 +92,18 @@
 
             ul {
                 li {
+                    button {
+                        padding: 10px;
+                        background-color: white;
+                        border: none;
+                        transition: filter 0.3s;
+                        color: var(--black);
+                        font-weight: 700;
+                        font-size: 13px;
+                        line-height: 160.62%;
+                        list-style: none;
+                    }
+
                     margin-left: 20px;
                     margin-bottom: 15px;
 

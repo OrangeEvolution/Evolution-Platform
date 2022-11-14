@@ -43,9 +43,13 @@ export async function findAll(token: string) {
         return error;
     }
 }
-export async function update(id: number, content: object) {
+export async function update(id: number, content: object,token: string) {
     try {
-        let res = await api.put(`/api/content/${id}`, content)
+        let res = await api.put(`/api/content/${id}`, content, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
 
         if (res.data) {
             return res.data;
