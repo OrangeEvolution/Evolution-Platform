@@ -3,8 +3,10 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 
 import styles from '../styles/Login.module.scss';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 export default function Login() {
+    const router = useRouter();
     const { data: session } = useSession();
 
     console.log(session?.user)
@@ -13,9 +15,7 @@ export default function Login() {
         <div className={styles.container}>
             {!session
                 ? <>
-                    <button onClick={(e) => { e.preventDefault(), signIn('github') }}>Login pelo GitHub</button>
-                    <button onClick={(e) => { e.preventDefault(), signIn('google') }}>Login pelo Google</button>
-                    <button onClick={(e) => { e.preventDefault(), signIn('facebook') }}>Login pelo Facebook</button>
+                    <button onClick={(e) => { e.preventDefault(), router.push('/') }}>Go to home</button>
                 </>
                 : <>
                     <img className={styles.photo} src={session?.user?.image!} alt="Foto de Perfil" />

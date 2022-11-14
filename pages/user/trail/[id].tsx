@@ -10,50 +10,72 @@ import { findAll } from "../../../services/contentType";
 import { findAll as findAllContent } from "../../../services/category";
 import Footer from '../../../components/Footer';
 import Link from 'next/link';
+import { ContentTpe } from '../../../Types/ContentType';
+import Head from 'next/head';
 
 type TrailProps = {
   trail: any;
+  contentsTypes: ContentTpe[];
 }
-export default function ContentDetails({ trail }: TrailProps) {
+export default function ContentDetails({ trail, contentsTypes }: TrailProps) {
   const { data: session } = useSession();
+
+  function getContentTypeName(id: number): string {
+    let typeName = `${id}`;
+
+    for (let i = 0; i < contentsTypes.length; i++) {
+      if (contentsTypes[i].id == id) {
+        typeName = contentsTypes[i].name;
+      }
+    }
+
+    return typeName;
+  }
+
   return (
     <>
       <div className={Styles.container}>
+        <Head>
+          <title>Trilha {trail.name} | Orange Evolution</title>
+        </Head>
+
         <Header />
 
         <div className={Styles.welcome}>
-          <p>Olá, {session?.user.name}!</p>
-          <span>Você está na trilha:</span><p>{trail.name}</p>
+          <div className={Styles.user}>
+            <p>Olá, {session?.user.name}!</p>
+            <span>Você está na trilha de <span className={Styles.trailname}>{trail.name}</span></span>
+          </div>
         </div>
 
         {trail.categories.map((category) => (
-          <>
-            <div className={Styles.categoria}><h1>{category.name}</h1></div>
+          <div className={Styles.content} key={category.id}>
 
+            <div className={Styles.category}>
+              <p>{category.name}</p>
+            </div>
 
             <div className={Styles.contents}>
               <ul>
                 <li>
                   {category.contents.map((content) => (
-                    <>
-                      <h2>{content.description}</h2>
-                      <div className={Styles.info_content}>
-                        <ul>
-                          <li className={Styles.contentType}>{content.contentType}</li>
-                          <li className={Styles.durationInMinutes}>{content.durationInMinutes} minutos</li>
-                          <li className={Styles.partner}>{content.partner}</li>
-                          <li className={Styles.linkContent}><><Link href={content.link}>Acesse o conteudo</Link></></li>
-                        </ul>
+                    <Link href={content.link} target='_blank' className={Styles.items} key={content.id}>
+                      <p><strong>{content.description}</strong></p>
+                      <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde, accusamus eaque beatae delectus omnis magnam deleniti cum velit alias ipsum exercitationem commodi?</span>
 
-                      </div>
-                    </>
+                      <ul>
+                        <li>{getContentTypeName(content.contentType)}</li>
+                        <li>{content.durationInMinutes} minutos</li>
+                        <li>Em andamento</li>
+                        <li>{content.partner}</li>
+                      </ul>
+                    </Link>
                   ))}
                 </li>
               </ul>
 
-
             </div>
-          </>
+          </div>
         ))}
       </div>
       <Footer />
@@ -69,7 +91,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const contentType = await findAll(session?.user.token);
   const categories = await findAllContent(session?.user.token);
 
-  console.log(categories._embedded.categoryVOList)
+  console.log(contentType._embedded.contentTypeVOList)
 
   return {
     props: {

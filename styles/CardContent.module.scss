@@ -1,129 +1,162 @@
 .container {
+    background: linear-gradient(242.84deg, rgba(52, 25, 2, 0.176) 61.75%, rgba(253, 117, 0, 0) 98.34%), #341902;
     width: 100%;
     max-width: 1120px;
     min-height: 100vh;
     margin: 0 auto;
 
+    padding: 0px 10px;
+
     .welcome {
-        margin-top: 20px;
+        margin: 20px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        gap: 10px;
 
         p {
             font-weight: 900;
-            font-size: 15px;
-            line-height: 117.5%;
-            color: var(--orange);
-            margin-top: 5px;
+            font-size: 18px;
+            line-height: 24px;
+            color: #FD7500;
         }
 
         span {
-            margin-top: 10px;
-            font-weight: 300;
-            font-size: 12px;
-            line-height: 117.5%;
-            text-align: center;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 20px;
+            color: var(--white);
 
-            color: #F5F5F5;
+        }
+
+        .trailname {
+            color: var(--orange);
         }
     }
 
-    h1 {
-        margin-left: 8px;
-
-    }
-
-    .categoria {
-        margin-top: 50px;
-        font-size: 12px !important;
-        width: 50%;
-        height: 50px;
-        color: #000000;
-        background: linear-gradient(269.8deg, rgba(253, 117, 0, 0.3) 0.04%, rgba(52, 168, 83, 0.3) 99.7%), #F5F5F5;
-        border-radius: 10px;
-    }
-
-    .contents {
-        margin-top: -1.2%;
-        margin-bottom: 20px;
-        background: linear-gradient(269.8deg, rgba(253, 117, 0, 0.1) 0.04%, rgba(52, 168, 83, 0.1) 99.7%), #F5F5F5;
-        border-radius: 10px;
-
+    .content {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: flex-start;
+        
+        .category {
+            width: 250px;
+            padding: 10px;
+            background: linear-gradient(269.8deg, rgba(253, 117, 0, 0.3) 0.04%, rgba(52, 168, 83, 0.3) 99.7%), #F5F5F5;
+            border-radius: 10px 10px 0px 0px;
+            border: 1px solid rgba(53, 25, 2, 0.3);
 
-        span {
-            font-weight: 600;
-            font-size: 14px;
+            font-weight: 500;
+            font-size: 16px;
             line-height: 117.5%;
 
-            color: var(--black);
-            padding: 10px;
-        }
+            text-align: center;
 
-
-
-        ul {
-            border-radius: 10px;
-            width: 100%;
-            padding: 10px;
-
-
-            .info_content {
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-
-                ul {
-                    display: flex;
-                }
-            }
-
-            li {
-                font-weight: 700;
-                font-size: 13px;
-                line-height: 160.62%;
-                list-style: none;
-
-                color: var(--black);
-
-            }
-
-            ul {
-                li {
-                    margin-left: 20px;
-                    margin-bottom: 15px;
-
-                    &:hover {
-                        filter: brightness(0.8);
-                    }
-                }
-            }
-        }
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        h1 {
-            font-size: 20px !important;
-            margin-left: 8px;
-        }
-
-        h2 {
-            font-size: 15px !important;
-        }
-
-        .categoria {
-            height: 50px;
-            margin-left: 10px;
+            color: #000000;
 
         }
 
         .contents {
-            margin-top: -5%;
-            margin-left: 10px;
-            margin-right: 10px;
+            width: 100%;
+            margin-bottom: 20px;
+            background: linear-gradient(269.8deg, rgba(253, 117, 0, 0.3) 0.04%, rgba(52, 168, 83, 0.3) 99.7%), #F5F5F5;
+            border-radius: 0px 10px 10px 10px;
+    
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
 
+            ul {
+                border-radius: 10px;
+                width: 100%;
+    
+                li {
+                    font-weight: 700;
+                    font-size: 13px;
+                    line-height: 160.62%;
+                    list-style: none;
+
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+    
+                    color: var(--black);
+
+                    .items {
+                        background: #F5F5F5;
+                        border-radius: 10px;
+                        padding: 8px;
+
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        gap: 5px;
+                        transition: filter 0.3s;
+
+                        &:hover {
+                            filter: brightness(0.9);
+                        }
+
+                        p {
+                            font-weight: 700;
+                            font-size: 16px;
+                            line-height: 24px;
+                            color: var(--blue-dark);
+                        }
+
+                        span {
+                            font-family: 'Gothic A1';
+                            font-style: normal;
+                            font-weight: 400;
+                            font-size: 14px;
+                            line-height: 160.62%;
+                            color: var(--blue-dark);
+                        }
+
+                        ul {
+                            margin-top: 10px;
+                            display: flex;
+                            justify-content: flex-start;
+                            align-items: center;
+                            gap: 5px;
+    
+                            li {
+                                padding: 0 3px;
+                                background: rgba(52, 168, 83, 0.3);
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+
+                                font-family: 'Gothic A1';
+                                font-style: normal;
+                                font-weight: 400;
+                                font-size: 14px;
+                                line-height: 22px;
+
+                                color: var(--black);
+
+                                &:nth-child(2) {
+                                    background: #D9D9D9;
+                                }
+
+                                &:nth-child(3) {
+                                    background: rgba(253, 117, 0, 0.3);
+                                }
+
+                                &:nth-child(4) {
+                                    background: #333333;
+                                    color: var(--white);
+                                }
+                            }
+                        }
+                    }
+    
+                }
+            }
         }
     }
 }
