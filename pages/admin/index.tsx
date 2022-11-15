@@ -13,6 +13,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Modal from '../../components/Modal';
 import { notifyError, notifySuccess } from '../../util/notifyToast';
+import { useRouter } from 'next/router';
 
 type AdminProps = {
     trailsData: Trail[]
@@ -20,6 +21,7 @@ type AdminProps = {
 
 export default function Admin({ trailsData }: AdminProps) {
     const { data: session } = useSession();
+    const router = useRouter();
     const [trails, setTrails] = useState<Trail[]>(trailsData);
     const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -95,7 +97,10 @@ export default function Admin({ trailsData }: AdminProps) {
                         <span>Administre as trilhas de conteúdos abaixo:</span>
                     </div>
 
-                    <button onClick={(e) => { e.preventDefault(), setOpenModal(true) }}>Cadastrar nova trilha</button>
+                    <div className={styles.buttons}>
+                        <button onClick={(e) => { e.preventDefault(), setOpenModal(true) }}>Cadastrar nova trilha</button>
+                        <button onClick={(e) => { e.preventDefault(), router.push('/admin/category') }}>Gerenciar Categorias</button>
+                    </div>
                 </div>
 
                 <section>
