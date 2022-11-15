@@ -106,7 +106,6 @@ export default function TrailDetails({ trailData, contentsTypes, categories }: T
         setType(content.contentType);
         setContentBy(content.partner);
         setLink(content.link);
-        console.log(content)
     }
 
     function openModalAddNewCategory() {
@@ -137,8 +136,6 @@ export default function TrailDetails({ trailData, contentsTypes, categories }: T
 
     async function handleAddNewCategory(idCategory: number) {
         const res = await addCategoryToTrail(trail.id, idCategory, session?.user.token!);
-
-        console.log(res)
 
         if (res !== null) {
             await getTrail();
@@ -174,7 +171,7 @@ export default function TrailDetails({ trailData, contentsTypes, categories }: T
                         <label htmlFor="category">Categoria</label>
                         <select id="category" onChange={(e) => setCategory(e.target.value)}>
                             <option value="">Selecione</option>
-                            {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
+                            {trail.categories.map((category: any) => <option key={category.id} value={category.id}>{category.name}</option>)}
                         </select>
 
                         <label htmlFor="type">Tipo</label>
@@ -292,8 +289,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const trail = await findFullTrailById(parseInt(id), session?.user.token);
     const contentType = await findAll(session?.user.token);
     const categories = await findAllContent(session?.user.token);
-
-    console.log(trail.categories)
 
     return {
         props: {
