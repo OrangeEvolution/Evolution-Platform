@@ -16,7 +16,9 @@
     
         .modal {
             background: var(--white);
-            width: 500px;
+            min-width: 350px;
+            max-width: 500px;
+            width: 100%;
             height: auto;
             border-radius: 5px;
         }
