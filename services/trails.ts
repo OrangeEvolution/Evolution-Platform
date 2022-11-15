@@ -1,8 +1,12 @@
 import { api } from "./api";
 
-export async function createTrails(name: string, description: string, mounted_by: string) {
+export async function createTrails(name: string, description: string, mounted_by: string, token: string) {
     try {
-        let res = await api.post(`/api/trails/`, { name, description, mounted_by });
+        let res = await api.post(`/api/trails/`, { name, description, mounted_by }, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        });
 
         if (res.data) {
             return res.data;
