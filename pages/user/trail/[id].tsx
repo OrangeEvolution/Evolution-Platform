@@ -16,7 +16,9 @@ import Head from 'next/head';
 import Modal from '../../../components/Modal';
 import { Content } from '../../../Types/Content';
 import { notifySuccess } from '../../../util/notifyToast';
-import { useRouter } from 'next/router';
+
+import emptyImage from '../../../public/assets/images/empty.svg';
+import Image from 'next/image';
 
 type TrailProps = {
   trailData: any;
@@ -118,7 +120,7 @@ export default function ContentDetails({ trailData, contentsTypes }: TrailProps)
           </div>
         </div>
 
-        {trail.categories.map((category) => (
+        {trail.categories.lenght > 0 ? trail.categories.map((category) => (
           <div className={Styles.content} key={category.id}>
 
             <div className={Styles.category}>
@@ -144,7 +146,11 @@ export default function ContentDetails({ trailData, contentsTypes }: TrailProps)
 
             </div>
           </div>
-        ))}
+        ))
+          : <div className={Styles.empty}>
+            <Image src={emptyImage} alt="Sem conteúdo" />
+          </div>
+        }
       </div>
       <Footer />
     </>
