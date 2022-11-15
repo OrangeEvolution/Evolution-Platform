@@ -17,11 +17,11 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 type UserProps = {
-    trails: Trail[]
+    trailsData: Trail[]
 }
 
-export default function User({ trails }: UserProps) {
-    const router = useRouter();
+export default function User({ trailsData }: UserProps) {
+    const [trails, setTrails] = useState<Trail[]>(trailsData);
     const { data: session } = useSession();
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [newTrails, setNewTrails] = useState<Trail[]>();
@@ -61,12 +61,18 @@ export default function User({ trails }: UserProps) {
 
 
         if (res !== null) {
+            getTrails()
             notifySuccess('Trilha adicionada com sucesso!');
             setOpenModal(false);
-            router.reload();
         } else {
             notifyError('Ocorreu um erro na selação da trilha!');
         }
+    }
+
+    async function getTrails() {
+        const user = await findById(session?.user.id, session?.user.token);
+        const trailsData: Trail[] = user.trails;
+        setTrails(trailsData);
     }
 
     return (
@@ -140,11 +146,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 
     const user = await findById(session?.user.id, session?.user.token);
-    const trails: Trail[] = user.trails;
+    const trailsData: Trail[] = user.trails;
 
     return {
         props: {
-            trails
+            trailsData
         }
     }
 }
