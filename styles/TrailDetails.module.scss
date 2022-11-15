@@ -33,8 +33,11 @@
             flex: 1;
             height: 100%;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            gap: 10px;
+
             background-color: var(--white);
             border-radius: 10px;
             margin-top: 10px;
@@ -49,6 +52,10 @@
 
                 &:hover {
                     filter: brightness(0.9);
+                }
+
+                &:nth-child(2) {
+                    background-color: #333333;
                 }
             }
         }
@@ -150,6 +157,54 @@
             padding: 10px 15px;
             border-radius: 8px;
             border: none;
+        }
+    }
+
+    .modalAddCategory {
+        color: var(--blue-dark);
+        padding: 20px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 10px;
+
+        h2 {
+            width: 100%;
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            li {
+                padding: 10px;
+                background: linear-gradient(269.8deg, rgba(253, 117, 0, 0.1) 0.04%, rgba(52, 168, 83, 0.1) 99.7%), #F5F5F5;
+                border-radius: 8px;
+
+                position: relative;
+
+                button {
+                    position: absolute;
+                    top: 0px;
+                    right: 0px;
+                    height: 100%;
+                    padding: 0px 10px;
+                    border-radius: 0px 8px 8px 0px;
+                    border: none;
+                    transition: filter 0.3s;
+                    background: rgba(52, 168, 83, 0.8);
+
+                    &:hover {
+                        filter: brightness(0.9);
+                    }
+                }
+            }
         }
     }
 }

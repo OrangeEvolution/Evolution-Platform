@@ -40,6 +40,15 @@ export default function CreateTrail({ trail }: CreateTrailProps) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context);
 
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+
     const trail = await findById(context.query.id, session?.user.token);
 
     console.log(trail)

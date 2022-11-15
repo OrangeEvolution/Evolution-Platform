@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import { getSession, useSession } from "next-auth/react";
 import Router, { useRouter } from "next/router";
-import { findById, findFullTrailById } from "../../../services/trails";
+import { addCategoryToTrail, findById, findFullTrailById } from "../../../services/trails";
 import { Trail } from "../../../Types/Trail";
 
 import styles from '../../../styles/TrailDetails.module.scss';
@@ -25,9 +25,13 @@ type TrailProps = {
 }
 
 export default function TrailDetails({ trail, contentsTypes, categories }: TrailProps) {
+    const router = useRouter();
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [openModalTwo, setOpenModalTwo] = useState<boolean>(false);
+    const [openModalCategory, setOpenModalCategory] = useState<boolean>(false);
     const [updating, setupdating] = useState<boolean>(false);
+
+    const [addCategories, setAddCategories] = useState<any>();
 
     const { data: session } = useSession();
     const [id, setId] = useState<number>();
@@ -59,6 +63,7 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
             notifyError('Atenção! Existem campos vázios');
         }
     }
+
     async function handleUpdateContent(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
@@ -91,6 +96,7 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
         setContentBy('');
         setLink('');
     }
+
     function fillForm(content: any) {
         setId(content.id);
         setDescription(content.description);
@@ -100,6 +106,46 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
         setContentBy(content.partner);
         setLink(content.link);
         console.log(content)
+    }
+
+    function openModalAddNewCategory() {
+        let temp: any[] = [];
+
+        categories.forEach(category => {
+            let control = true;
+
+            trail.categories.forEach(categoryTrail => {
+                if (categoryTrail.id === category.id) {
+                    control = false;
+                }
+            })
+
+            if (control) {
+                temp.push(category);
+            }
+        })
+
+        if (temp.length > 0) {
+            setAddCategories(temp);
+            setOpenModalCategory(true);
+        } else {
+            notifyError('Não existem novas categorias para serem adicionadas!');
+        }
+
+    }
+
+    async function handleAddNewCategory(idCategory: number) {
+        const res = await addCategoryToTrail(trail.id, idCategory, session?.user.token);
+
+        console.log(res)
+
+        if (res !== null) {
+            notifySuccess('Categoria adicionada com sucesso!');
+            setOpenModalCategory(false);
+            router.reload();
+        } else {
+            notifyError('Ocorreu um erro na selação da trilha!');
+        }
     }
 
     return (
@@ -141,6 +187,23 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
                     </form>
                 </Modal>
 
+                <Modal
+                    openModal={openModalCategory}
+                    closeModal={() => setOpenModalCategory(false)}
+                >
+                    <div className={styles.modalAddCategory}>
+                        <h2>Selecione uma nova categoria</h2>
+                        <ul>
+                            {addCategories?.map((category) => (
+                                <li key={category.id}>
+                                    <span>{category.name}</span>
+                                    <button onClick={(e) => { e.preventDefault(), handleAddNewCategory(category.id) }}>Adicionar</button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </Modal>
+
                 <div className={styles.details}>
                     <header>
                         <Image src={TrailImage} alt='Imagem da trilha' />
@@ -150,7 +213,7 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
                     </header>
                     <div className={styles.content}>
                         <button onClick={(e) => { e.preventDefault(), setOpenModal(true), clearForm() }}>Adicionar um novo material</button>
-                        {/*<Link href={`/admin/content/create/${trail.id}`}>Adicionar um novo material</Link>*/}
+                        <button onClick={(e) => { e.preventDefault(), openModalAddNewCategory() }}>Adicionar nova categoria a trilha</button>
                     </div>
                 </div>
 
@@ -191,10 +254,10 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
                     <span>Atualizar um material existente</span>
                     <ul>
                         {trail.categories.map((category) => (
-                            <li>
+                            <li key={category.id}>
                                 {category.name}
                                 <ul>
-                                    {category.contents.map((content) => <Link href={'#'}><li><button onClick={(e) => { e.preventDefault(), fillForm(content), setOpenModalTwo(true) }}>{content.description}</button></li></Link>)}
+                                    {category.contents.map((content) => <Link href={'#'} key={content.id}><li><button onClick={(e) => { e.preventDefault(), fillForm(content), setOpenModalTwo(true) }}>{content.description}</button></li></Link>)}
                                 </ul>
                             </li>
                         ))}
@@ -209,11 +272,20 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context);
 
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+
     const trail = await findFullTrailById(context.query.id, session?.user.token);
     const contentType = await findAll(session?.user.token);
     const categories = await findAllContent(session?.user.token);
 
-    console.log(categories._embedded.categoryVOList)
+    console.log(trail.categories)
 
     return {
         props: {

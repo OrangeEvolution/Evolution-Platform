@@ -125,8 +125,16 @@ export default function CategoryDetails({ categories }: CategoryProps) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context);
 
-    const categories = await findAllContent(session?.user.token);
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
 
+    const categories = await findAllContent(session?.user.token);
 
     return {
         props: {

@@ -66,9 +66,13 @@ export async function deleteTrail(id: number) {
         return error;
     }
 }
-export async function addCategoryToTrail(idTrail: number, idCategory: number) {
+export async function addCategoryToTrail(idTrail: number, idCategory: number, token: string) {
     try {
-        let res = await api.patch(`/api/trails/addcategory/${idTrail}/${idCategory}`)
+        let res = await api.patch(`/api/trails/addcategory/${idTrail}/${idCategory}`, '', {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
 
         if (res.data) {
             return res.data;
