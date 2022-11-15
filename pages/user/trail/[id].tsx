@@ -120,7 +120,7 @@ export default function ContentDetails({ trailData, contentsTypes }: TrailProps)
           </div>
         </div>
 
-        {trail.categories.lenght > 0 ? trail.categories.map((category) => (
+        {trail.categories.length > 0 ? trail.categories.map((category) => (
           <div className={Styles.content} key={category.id}>
 
             <div className={Styles.category}>
@@ -173,6 +173,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const trailData = await findFullTrailByIdAndProgress(context.query.id, session?.user.token);
   const contentType = await findAll(session?.user.token);
   const categories = await findAllContent(session?.user.token);
+
+  console.log(trailData.categories.length)
 
   return {
     props: {

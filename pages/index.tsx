@@ -27,6 +27,7 @@ import { notifyError } from '../util/notifyToast'
 export default function Home() {
   const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
   const [visibleButtonMobile, setVisibleButtonMobile] = useState<boolean>();
+  const [showError, setShowError] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -35,6 +36,18 @@ export default function Home() {
   const handlerShowLoginForm = (status: boolean) => {
     setShowLoginForm(status);
   }
+
+  function loginError() {
+    notifyError('Erro ao fazer login! Verifque se seu login e senha estão corretos!');
+  }
+
+  useEffect(() => {
+    if (router.query.error) {
+      setShowError(true);
+      notifyError('Erro ao fazer login! Verifque se seu login e senha estão corretos!');
+    }
+  }, [])
+
 
   return (
     <div className={styles.container}>
@@ -75,7 +88,6 @@ export default function Home() {
 
           <section className={styles.authentication} id="auth">
             <div className="content">
-              {router.query.error && <div style={{ marginBottom: 10, color: 'orange', width: '100%', textAlign: 'center' }}><span>Ocorreu um erro ao realizar o login!</span></div>}
               {showLoginForm
                 ? <Login showRegisterForm={handlerShowLoginForm} />
                 : <Register setShowLoginForm={handlerShowLoginForm} />
