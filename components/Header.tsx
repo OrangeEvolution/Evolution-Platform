@@ -27,7 +27,7 @@ export default function Header() {
 
                 <div className={Styles.logout}>
                     <Image src={logoutImg} alt='Sair' />
-                    <Link onClick={() => signOut()} className={Styles.buttonLogout} href={''}>Sair</Link>
+                    <button className={Styles.buttonLogout} onClick={(e) => { e.preventDefault(), signOut() }}>Sair</button>
                 </div>
             </div>
         </div>
