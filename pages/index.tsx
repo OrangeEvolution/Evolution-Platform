@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.scss'
 import Register from '../components/Authentication/Register'
 
@@ -20,9 +20,9 @@ import { getSession, signOut, useSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
 import Footer from '../components/Footer'
 
-import nookies from 'nookies'
 import { useRouter } from 'next/router'
 import { findById } from '../services/user'
+import { notifyError } from '../util/notifyToast'
 
 export default function Home() {
   const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
@@ -75,6 +75,7 @@ export default function Home() {
 
           <section className={styles.authentication} id="auth">
             <div className="content">
+              {router.query.error && <div style={{ marginBottom: 10, color: 'orange', width: '100%', textAlign: 'center' }}><span>Ocorreu um erro ao realizar o login!</span></div>}
               {showLoginForm
                 ? <Login showRegisterForm={handlerShowLoginForm} />
                 : <Register setShowLoginForm={handlerShowLoginForm} />
