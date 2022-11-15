@@ -19,11 +19,11 @@ import { notifySuccess } from '../../../util/notifyToast';
 import { useRouter } from 'next/router';
 
 type TrailProps = {
-  trail: any;
+  trailData: any;
   contentsTypes: ContentTpe[];
 }
-export default function ContentDetails({ trail, contentsTypes }: TrailProps) {
-  const router = useRouter();
+export default function ContentDetails({ trailData, contentsTypes }: TrailProps) {
+  const [trail, setTrail] = useState<any>(trailData);
   const pageTitle = `Trilha ${trail?.name} | Orange Evolution`;
 
   const { data: session } = useSession();
@@ -68,9 +68,14 @@ export default function ContentDetails({ trail, contentsTypes }: TrailProps) {
       id: content.progress
     }, session?.user.token);
 
+    await getTrails();
     notifySuccess(`Status de progresso no conteúdo alterado com sucesso.`);
     setOpenModal(false);
-    router.reload();
+  }
+
+  async function getTrails() {
+    const trailData = await findFullTrailByIdAndProgress(trail.id, session?.user.token);
+    setTrail(trailData);
   }
 
   return (
@@ -159,15 +164,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
 
-  const trail = await findFullTrailByIdAndProgress(context.query.id, session?.user.token);
+  const trailData = await findFullTrailByIdAndProgress(context.query.id, session?.user.token);
   const contentType = await findAll(session?.user.token);
   const categories = await findAllContent(session?.user.token);
 
-  console.log(trail)
-
   return {
     props: {
-      trail,
+      trailData,
       contentsTypes: contentType._embedded.contentTypeVOList,
       categories: categories._embedded.categoryVOList
     }
