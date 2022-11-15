@@ -163,6 +163,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const contentType = await findAll(session?.user.token);
   const categories = await findAllContent(session?.user.token);
 
+  console.log(trail)
+
   return {
     props: {
       trail,

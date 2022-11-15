@@ -13,7 +13,7 @@ import { findAll } from "../../services/trails";
 import { Trail } from "../../Types/Trail";
 import Modal from "../../components/Modal";
 import { useState } from "react";
-import { addTrailToUser } from "../../services/user";
+import { addTrailToUser, findById } from "../../services/user";
 import { notifyError, notifySuccess } from "../../util/notifyToast";
 import { useRouter } from "next/router";
 
@@ -112,7 +112,7 @@ export default function Choose({ trails }: ChooseProps) {
                             </button>
                         ))}
                     </div>
-                    <p>Ainda não tem certeza do que escolher? <Link href='javascript:;' onClick={() => { setOpenModalTrails(true) }}>Clique aqui</Link> para saber mais sobre cada uma das trilhas.</p>
+                    <p>Ainda não tem certeza do que escolher? <Link href='' onClick={(e) => { e.preventDefault(), setOpenModalTrails(true) }}>Clique aqui</Link> para saber mais sobre cada uma das trilhas.</p>
                 </section>
 
             </main>
@@ -124,7 +124,28 @@ export default function Choose({ trails }: ChooseProps) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context);
 
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+
+    let user = await findById(session.user.id, session.user.token);
+
+    if (user.trails.length !== 0) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+
     const res = await findAll(session?.user.token);
+
 
     return {
         props: {

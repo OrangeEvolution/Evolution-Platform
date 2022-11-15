@@ -103,7 +103,7 @@ export default function User({ trails }: UserProps) {
                         <p>Olá, {session?.user.name}!</p>
                         <span>Veja as trilhas que está cadastrado:</span>
                     </div>
-                    <button onClick={(e) => { e.preventDefault(), openModalTrails() }}>Adicionar nova trilha</button>
+                    <button onClick={(e) => { e.preventDefault(), openModalTrails() }}>Inscrever-se em nova trilha</button>
                 </div>
 
                 <section>
@@ -129,6 +129,15 @@ export default function User({ trails }: UserProps) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context);
+
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
 
     const user = await findById(session?.user.id, session?.user.token);
     const trails: Trail[] = user.trails;

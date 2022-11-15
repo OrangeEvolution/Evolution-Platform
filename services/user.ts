@@ -70,8 +70,10 @@ export async function addTrailToUser(idTrail: number, token: string) {
             }
         })
 
+        console.log(res);
+
         if (res.data) {
-            return res.data;
+            return res;
         }
     } catch (error) {
         return null;
