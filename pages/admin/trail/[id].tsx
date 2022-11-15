@@ -19,12 +19,13 @@ import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 
 type TrailProps = {
-    trail: any;
+    trailData: any;
     contentsTypes: any[];
     categories: any[];
 }
 
-export default function TrailDetails({ trail, contentsTypes, categories }: TrailProps) {
+export default function TrailDetails({ trailData, contentsTypes, categories }: TrailProps) {
+    const [trail, setTrail] = useState<any>(trailData);
     const router = useRouter();
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [openModalTwo, setOpenModalTwo] = useState<boolean>(false);
@@ -55,10 +56,10 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
                 link: link
             }, session?.user.token);
 
+            await getTrail();
             notifySuccess(`Conteúdo "${res.description}" cadastrado com sucesso!`);
             setOpenModal(false);
             clearForm();
-            Router.reload(window.location.pathname);
         } else {
             notifyError('Atenção! Existem campos vázios');
         }
@@ -78,10 +79,10 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
                 link: link
             }, session?.user.token);
 
+            await getTrail();
             notifySuccess(`Conteúdo "${res.description}" Atualizado com sucesso!`);
             setOpenModalTwo(false);
             clearForm();
-            Router.reload(window.location.pathname);
 
         } else {
             notifyError('Atenção! Existem campos vázios');
@@ -140,12 +141,17 @@ export default function TrailDetails({ trail, contentsTypes, categories }: Trail
         console.log(res)
 
         if (res !== null) {
+            await getTrail();
             notifySuccess('Categoria adicionada com sucesso!');
             setOpenModalCategory(false);
-            router.reload();
         } else {
             notifyError('Ocorreu um erro na selação da trilha!');
         }
+    }
+
+    async function getTrail() {
+        const trailData = await findFullTrailById(trail.id, session?.user.token);
+        setTrail(trailData);
     }
 
     return (
@@ -289,7 +295,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     return {
         props: {
-            trail,
+            trailData: trail,
             contentsTypes: contentType._embedded.contentTypeVOList,
             categories: categories._embedded.categoryVOList
         }
