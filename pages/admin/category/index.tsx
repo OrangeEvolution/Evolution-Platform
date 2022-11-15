@@ -118,7 +118,7 @@ export default function CategoryDetails({ categoriesData }: CategoryProps) {
                     <span>Atualizar uma categoria existente</span>
                     <ul>
                         {categories.map((category) => (
-                            <Link href={'#'}><li><button onClick={(e) => { e.preventDefault(), fillForm(category), setOpenModalTwo(true) }}>{category.name}</button></li></Link>
+                            <Link href={'#'} key={category.id} ><li><button onClick={(e) => { e.preventDefault(), fillForm(category), setOpenModalTwo(true) }}>{category.name}</button></li></Link>
                         ))}
                     </ul>
                 </div>
