@@ -35,7 +35,7 @@ export default function TrailDetails({ trailData, contentsTypes, categories }: T
     const [addCategories, setAddCategories] = useState<any>();
 
     const { data: session } = useSession();
-    const [id, setId] = useState<number>();
+    const [id, setId] = useState<number>(0);
     const [description, setDescription] = useState<string>('');
     const [duration, setDuration] = useState<string>('');
     const [category, setCategory] = useState<string>('');
@@ -54,7 +54,7 @@ export default function TrailDetails({ trailData, contentsTypes, categories }: T
                 category: category,
                 contentType: type,
                 link: link
-            }, session?.user.token);
+            }, session?.user.token!);
 
             await getTrail();
             notifySuccess(`Conteúdo "${res.description}" cadastrado com sucesso!`);
@@ -77,7 +77,7 @@ export default function TrailDetails({ trailData, contentsTypes, categories }: T
                 category: category,
                 contentType: type,
                 link: link
-            }, session?.user.token);
+            }, session?.user.token!);
 
             await getTrail();
             notifySuccess(`Conteúdo "${res.description}" Atualizado com sucesso!`);
@@ -115,7 +115,7 @@ export default function TrailDetails({ trailData, contentsTypes, categories }: T
         categories.forEach(category => {
             let control = true;
 
-            trail.categories.forEach(categoryTrail => {
+            trail.categories.forEach((categoryTrail: any) => {
                 if (categoryTrail.id === category.id) {
                     control = false;
                 }
@@ -136,7 +136,7 @@ export default function TrailDetails({ trailData, contentsTypes, categories }: T
     }
 
     async function handleAddNewCategory(idCategory: number) {
-        const res = await addCategoryToTrail(trail.id, idCategory, session?.user.token);
+        const res = await addCategoryToTrail(trail.id, idCategory, session?.user.token!);
 
         console.log(res)
 
@@ -150,7 +150,7 @@ export default function TrailDetails({ trailData, contentsTypes, categories }: T
     }
 
     async function getTrail() {
-        const trailData = await findFullTrailById(trail.id, session?.user.token);
+        const trailData = await findFullTrailById(trail.id, session?.user.token!);
         setTrail(trailData);
     }
 
@@ -200,7 +200,7 @@ export default function TrailDetails({ trailData, contentsTypes, categories }: T
                     <div className={styles.modalAddCategory}>
                         <h2>Selecione uma nova categoria</h2>
                         <ul>
-                            {addCategories?.map((category) => (
+                            {addCategories?.map((category: any) => (
                                 <li key={category.id}>
                                     <span>{category.name}</span>
                                     <button onClick={(e) => { e.preventDefault(), handleAddNewCategory(category.id) }}>Adicionar</button>
@@ -259,11 +259,11 @@ export default function TrailDetails({ trailData, contentsTypes, categories }: T
                     </Modal>
                     <span>Atualizar um material existente</span>
                     <ul>
-                        {trail.categories.map((category) => (
+                        {trail.categories.map((category: any) => (
                             <li key={category.id}>
                                 {category.name}
                                 <ul>
-                                    {category.contents.map((content) => <Link href={'#'} key={content.id}><li><button onClick={(e) => { e.preventDefault(), fillForm(content), setOpenModalTwo(true) }}>{content.description}</button></li></Link>)}
+                                    {category.contents.map((content: any) => <Link href={'#'} key={content.id}><li><button onClick={(e) => { e.preventDefault(), fillForm(content), setOpenModalTwo(true) }}>{content.description}</button></li></Link>)}
                                 </ul>
                             </li>
                         ))}
@@ -287,7 +287,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
     }
 
-    const trail = await findFullTrailById(context.query.id, session?.user.token);
+    const id: string = context.query.id?.toString()!;
+
+    const trail = await findFullTrailById(parseInt(id), session?.user.token);
     const contentType = await findAll(session?.user.token);
     const categories = await findAllContent(session?.user.token);
 

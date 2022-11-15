@@ -33,7 +33,7 @@ export default function Admin({ trailsData }: AdminProps) {
         e.preventDefault();
 
         if (name !== '' && description !== '' && mountedBy !== '') {
-            const res = await createTrails(name, description, mountedBy, session?.user.token);
+            const res = await createTrails(name, description, mountedBy, session?.user.token!);
 
             if (res) {
                 await getTrails();
@@ -50,7 +50,7 @@ export default function Admin({ trailsData }: AdminProps) {
     }
 
     async function getTrails() {
-        const res = await findAll(session?.user.token);
+        const res = await findAll(session?.user.token!);
         const trailsData: Trail[] = res._embedded.trailVOList;
         setTrails(trailsData);
     }
@@ -79,7 +79,7 @@ export default function Admin({ trailsData }: AdminProps) {
                             <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
 
                             <label htmlFor="">Descrição</label>
-                            <textarea cols="20" rows="10" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                            <textarea value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
 
                             <label htmlFor="">Montada por</label>
                             <input type="text" value={mountedBy} onChange={(e) => setMountedBy(e.target.value)} />

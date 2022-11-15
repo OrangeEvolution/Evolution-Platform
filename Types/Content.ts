@@ -8,5 +8,7 @@ export type Content={
     partner: string;
     durationInMinutes: number;
     category: Category; 
-    contentType: ContentTpe;
+    contentType: number;
+    progress: number;
+    progressEnum: string;
 }

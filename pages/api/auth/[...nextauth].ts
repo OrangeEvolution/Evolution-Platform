@@ -1,3 +1,4 @@
+import { User } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { api } from "../../../services/api";
@@ -53,7 +54,7 @@ export default NextAuth({
     },
 
     async session({ session, token }) {
-      session.user = token.user
+      session.user = token.user as User
       
       return session
     }

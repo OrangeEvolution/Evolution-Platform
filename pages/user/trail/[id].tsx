@@ -68,7 +68,7 @@ export default function ContentDetails({ trailData, contentsTypes }: TrailProps)
       user: session?.user.id,
       status: progress,
       id: content.progress
-    }, session?.user.token);
+    }, session?.user.token!);
 
     await getTrails();
     notifySuccess(`Status de progresso no conteúdo alterado com sucesso.`);
@@ -76,7 +76,7 @@ export default function ContentDetails({ trailData, contentsTypes }: TrailProps)
   }
 
   async function getTrails() {
-    const trailData = await findFullTrailByIdAndProgress(trail.id, session?.user.token);
+    const trailData = await findFullTrailByIdAndProgress(trail.id, session?.user.token!);
     setTrail(trailData);
   }
 
@@ -97,9 +97,9 @@ export default function ContentDetails({ trailData, contentsTypes }: TrailProps)
             <h2>Informações sobre o conteúdo</h2>
             <ul>
               <li><strong>Título:</strong> <span>{content?.description}</span></li>
-              <li><strong>Tipo: </strong> <span>{getContentTypeName(content?.contentType)}</span></li>
+              <li><strong>Tipo: </strong> <span>{getContentTypeName(content?.contentType!)}</span></li>
               <li><strong>Duração: </strong><span>{content?.durationInMinutes} minutos</span></li>
-              <li><strong>Status: </strong><span>{getProgressName(content?.progressEnum)}</span></li>
+              <li><strong>Status: </strong><span>{getProgressName(content?.progressEnum!)}</span></li>
               <li><strong>Conteúdo por: </strong><span>{content?.partner}</span></li>
               <li>
                 <Link href={content?.link!} target="_blank">Acessar conteúdo</Link>
@@ -107,7 +107,7 @@ export default function ContentDetails({ trailData, contentsTypes }: TrailProps)
               <li>
                 {content?.progressEnum === 'NOT_COMPLETED'
                   ? <button onClick={(e) => { e.preventDefault(), handleUpdateContentProgress(content, 'CONCLUDED') }}>Alterar status para concluído</button>
-                  : <button onClick={(e) => { e.preventDefault(), handleUpdateContentProgress(content, 'NOT_COMPLETED') }} className={Styles.notCompleted}>Alterar status para não concluído</button>}
+                  : <button onClick={(e) => { e.preventDefault(), handleUpdateContentProgress(content!, 'NOT_COMPLETED') }} className={Styles.notCompleted}>Alterar status para não concluído</button>}
               </li>
             </ul>
           </div>
@@ -120,7 +120,7 @@ export default function ContentDetails({ trailData, contentsTypes }: TrailProps)
           </div>
         </div>
 
-        {trail.categories.length > 0 ? trail.categories.map((category) => (
+        {trail.categories.length > 0 ? trail.categories.map((category: any) => (
           <div className={Styles.content} key={category.id}>
 
             <div className={Styles.category}>
@@ -130,7 +130,7 @@ export default function ContentDetails({ trailData, contentsTypes }: TrailProps)
             <div className={Styles.contents}>
               <ul>
                 <li>
-                  {category.contents.map((content) => (
+                  {category.contents.map((content: any) => (
                     <button className={Styles.items} key={content.id} onClick={(e) => { e.preventDefault(), handleOpenModalContent(content) }}>
                       <p><strong>{content.description}</strong></p>
                       <ul>
@@ -170,7 +170,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
 
-  const trailData = await findFullTrailByIdAndProgress(context.query.id, session?.user.token);
+  const id: string = context.query.id?.toString()!;
+
+  const trailData = await findFullTrailByIdAndProgress(parseInt(id), session?.user.token);
   const contentType = await findAll(session?.user.token);
   const categories = await findAllContent(session?.user.token);
 

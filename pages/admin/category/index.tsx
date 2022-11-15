@@ -23,7 +23,7 @@ export default function CategoryDetails({ categoriesData }: CategoryProps) {
     const [openModalTwo, setOpenModalTwo] = useState<boolean>(false);
 
     const { data: session } = useSession();
-    const [id, setId] = useState<number>();
+    const [id, setId] = useState<number>(0);
     const [name, setName] = useState<string>('');
 
     async function handleSubmitNewContent(e: React.FormEvent<HTMLFormElement>) {
@@ -32,7 +32,7 @@ export default function CategoryDetails({ categoriesData }: CategoryProps) {
         if (name !== '') {
             var res = await createCategory({
                 name: name
-            }, session?.user.token);
+            }, session?.user?.token || '');
 
             await getCategories();
             setOpenModal(false);
@@ -49,7 +49,7 @@ export default function CategoryDetails({ categoriesData }: CategoryProps) {
             const res = await update(id, {
                 id: id,
                 name: name
-            }, session?.user.token);
+            }, session?.user.token!);
 
             await getCategories();
             notifySuccess(`Categoria "${res.name}" atualizado com sucesso!`);
@@ -62,7 +62,7 @@ export default function CategoryDetails({ categoriesData }: CategoryProps) {
     }
 
     async function getCategories() {
-        const categories = await findAllContent(session?.user.token);
+        const categories = await findAllContent(session?.user.token!);
         setCategories(categories._embedded.categoryVOList);
     }
 
@@ -117,7 +117,7 @@ export default function CategoryDetails({ categoriesData }: CategoryProps) {
                     </Modal>
                     <span>Atualizar uma categoria existente</span>
                     <ul>
-                        {categories.map((category) => (
+                        {categories.map((category: any) => (
                             <Link href={'#'} key={category.id} ><li><button onClick={(e) => { e.preventDefault(), fillForm(category), setOpenModalTwo(true) }}>{category.name}</button></li></Link>
                         ))}
                     </ul>
@@ -140,7 +140,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
     }
 
-    const categories = await findAllContent(session?.user.token);
+    const categories = await findAllContent(session?.user?.token || '');
 
     return {
         props: {

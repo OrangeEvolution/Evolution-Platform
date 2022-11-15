@@ -49,7 +49,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
     }
 
-    const trail = await findById(context.query.id, session?.user.token);
+    const id: string = context.query.id?.toString()!;
+
+    const trail = await findById(parseInt(id), session?.user.token);
 
     console.log(trail)
 

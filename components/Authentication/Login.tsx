@@ -45,7 +45,7 @@ export default function Login({ showRegisterForm }: LoginProps) {
 
                 <span>
                     Ao informar meus dados, estou ciente das<br />
-                    diretrizes da <a href="https://fcamara-images.s3.amazonaws.com/site-fcamara/politica-privacidade.pdf" target='_blank'>Política de Privacidade</a>.
+                    diretrizes da <a href="https://fcamara-images.s3.amazonaws.com/site-fcamara/politica-privacidade.pdf" target='_blank' rel="noreferrer">Política de Privacidade</a>.
                 </span>
             </form >
         </div >

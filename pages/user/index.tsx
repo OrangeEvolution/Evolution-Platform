@@ -27,7 +27,7 @@ export default function User({ trailsData }: UserProps) {
     const [newTrails, setNewTrails] = useState<Trail[]>();
 
     async function openModalTrails() {
-        const res = await findAll(session?.user.token);
+        const res = await findAll(session?.user.token!);
         const addTrails: Trail[] = res._embedded.trailVOList;
 
         let temp: Trail[] = [];
@@ -55,7 +55,7 @@ export default function User({ trailsData }: UserProps) {
     }
 
     async function handleSelectTrail(trailId: number) {
-        let res = await addTrailToUser(trailId, session?.user.token);
+        let res = await addTrailToUser(trailId, session?.user.token!);
 
         console.log(res);
 
@@ -70,7 +70,7 @@ export default function User({ trailsData }: UserProps) {
     }
 
     async function getTrails() {
-        const user = await findById(session?.user.id, session?.user.token);
+        const user = await findById(session?.user.id!, session?.user.token!);
         const trailsData: Trail[] = user.trails;
         setTrails(trailsData);
     }

@@ -35,7 +35,7 @@ export default function Choose({ trails }: ChooseProps) {
     }
 
     async function handleSelectTrail(trailId: number) {
-        let res = await addTrailToUser(trailId, session?.user.token);
+        let res = await addTrailToUser(trailId, session?.user.token!);
 
         console.log(res);
 
