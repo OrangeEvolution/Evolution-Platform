@@ -14,10 +14,11 @@ import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 
 type CategoryProps = {
-    categories: any[];
+    categoriesData: any[];
 }
 
-export default function CategoryDetails({ categories }: CategoryProps) {
+export default function CategoryDetails({ categoriesData }: CategoryProps) {
+    const [categories, setCategories] = useState<any>(categoriesData);
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [openModalTwo, setOpenModalTwo] = useState<boolean>(false);
 
@@ -33,10 +34,10 @@ export default function CategoryDetails({ categories }: CategoryProps) {
                 name: name
             }, session?.user.token);
 
-            notifySuccess(`Categoria "${res.name}" cadastrada com sucesso!`);
+            await getCategories();
             setOpenModal(false);
+            notifySuccess(`Categoria "${res.name}" cadastrada com sucesso!`);
             clearForm();
-            Router.reload(window.location.pathname);
         } else {
             notifyError('Atenção! Nome está vázios');
         }
@@ -50,14 +51,19 @@ export default function CategoryDetails({ categories }: CategoryProps) {
                 name: name
             }, session?.user.token);
 
+            await getCategories();
             notifySuccess(`Categoria "${res.name}" atualizado com sucesso!`);
             setOpenModalTwo(false);
             clearForm();
-            Router.reload(window.location.pathname);
 
         } else {
             notifyError('Atenção! Nome está vazio');
         }
+    }
+
+    async function getCategories() {
+        const categories = await findAllContent(session?.user.token);
+        setCategories(categories._embedded.categoryVOList);
     }
 
     function clearForm() {
@@ -138,7 +144,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     return {
         props: {
-            categories: categories._embedded.categoryVOList
+            categoriesData: categories._embedded.categoryVOList
         }
     }
 }
